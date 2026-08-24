@@ -33,37 +33,41 @@
   --radius: 14px;
   --radius-sm: 10px;
 }
-* { margin: 0; padding: 0; box-sizing: border-box; }
-body { font-family: 'Noto Sans KR', sans-serif; background: var(--sidiz-dark); color: var(--text-primary); min-height: 100vh; }
 
-/* MAIN */
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  font-family: 'Noto Sans KR', sans-serif;
+  background: var(--sidiz-dark);
+  color: var(--text-primary);
+  min-height: 100vh;
+}
+
 .main { margin-left: 0; padding: 28px 36px; position: relative; z-index: 1; min-height: 100vh; }
 
-/* HEADER */
 .header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 32px; }
 .header-left h1 { font-family: 'Outfit', 'Noto Sans KR', sans-serif; font-size: 26px; font-weight: 700; letter-spacing: -0.3px; margin-bottom: 4px; }
 .header-left h1 span { background: var(--gradient-brand); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
 .header-left p { color: var(--text-muted); font-size: 13px; }
+.header-right { display: flex; align-items: center; gap: 10px; }
 
-/* TABS */
+/* ===== TABS ===== */
 .sub-tabs { display: flex; gap: 3px; background: var(--sidiz-dark2); padding: 3px; border-radius: 10px; margin-bottom: 24px; border: 1px solid var(--border); width: fit-content; }
 .sub-tab { padding: 9px 18px; border-radius: 8px; font-size: 12px; font-weight: 500; color: var(--text-muted); cursor: pointer; transition: all 0.2s; border: none; background: transparent; }
 .sub-tab:hover { color: var(--text-primary); }
 .sub-tab.active { background: var(--sidiz-blue); color: white; }
 
-/* KPI CARDS */
+/* ===== KPI CARDS ===== */
 .kpi-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin-bottom: 24px; }
 .kpi-card { background: var(--sidiz-card); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 20px; position: relative; overflow: hidden; box-shadow: 0 2px 10px rgba(0,0,43,0.04); transition: box-shadow 0.2s, transform 0.2s; }
 .kpi-card:hover { box-shadow: 0 6px 20px rgba(0,43,210,0.10); transform: translateY(-2px); }
-.kpi-card::after { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: var(--gradient-brand); border-radius: 0 0 2px 2px; opacity: 0; transition: opacity 0.2s; }
-.kpi-card:hover::after { opacity: 1; }
 .kpi-label { font-size: 11px; font-weight: 600; color: var(--text-muted); margin-bottom: 8px; letter-spacing: 0.5px; text-transform: uppercase; }
-.kpi-value { font-size: 28px; font-weight: 800; font-family: 'JetBrains Mono', monospace; margin-bottom: 4px; }
+.kpi-value { font-size: 28px; font-weight: 800; font-family: 'JetBrains Mono', monospace; margin-bottom: 4px; background: var(--gradient-brand); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
 .kpi-change { font-size: 12px; display: flex; align-items: center; gap: 3px; }
 .kpi-change.up { color: var(--accent-rose); }
 .kpi-change.down { color: var(--accent-emerald); }
 
-/* TABLE */
+/* ===== TABLE ===== */
 .data-table-wrapper { background: var(--sidiz-card); border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; margin-bottom: 24px; }
 .data-table-header { padding: 14px 18px; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; }
 .data-table-header h3 { font-size: 14px; font-weight: 600; }
@@ -83,305 +87,318 @@ body { font-family: 'Noto Sans KR', sans-serif; background: var(--sidiz-dark); c
 .danger { color: var(--accent-rose); font-weight: 600; }
 .success { color: var(--accent-emerald); font-weight: 600; }
 
-/* SECTION TITLE */
+/* ===== SECTION TITLE ===== */
 .section-title { font-size: 16px; font-weight: 600; margin-bottom: 18px; display: flex; align-items: center; gap: 8px; }
 .section-title::before { content: ''; width: 3px; height: 18px; background: var(--gradient-brand); border-radius: 2px; }
 
-/* CHART CARD */
-.chart-row { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; margin-bottom: 24px; }
+/* ===== CHART CARD ===== */
 .chart-card { background: var(--sidiz-card); border: 1px solid var(--border); border-radius: var(--radius); padding: 20px; box-shadow: 0 2px 12px rgba(0,0,43,0.05); transition: box-shadow 0.2s; }
 .chart-card:hover { box-shadow: 0 4px 20px rgba(0,43,210,0.08); }
 .chart-card h3 { font-size: 13px; font-weight: 700; margin-bottom: 14px; color: var(--text-primary); display: flex; align-items: center; gap: 7px; }
 .chart-card h3::before { content: ''; width: 3px; height: 14px; background: var(--gradient-brand); border-radius: 2px; flex-shrink: 0; }
 
-/* ACCORDION */
-.accordion { margin-bottom: 24px; }
-.accordion-item { background: var(--sidiz-card); border: 1px solid var(--border); border-radius: var(--radius-sm); margin-bottom: 8px; overflow: hidden; transition: all 0.2s; }
-.accordion-item:hover { border-color: var(--border-light); }
-.accordion-header { display: flex; align-items: center; justify-content: space-between; padding: 14px 18px; cursor: pointer; user-select: none; transition: background 0.2s; }
-.accordion-header:hover { background: rgba(0,87,184,0.05); }
-.accordion-header-left { display: flex; align-items: center; gap: 14px; }
-.accordion-product-name { font-size: 14px; font-weight: 600; }
-.accordion-product-count { font-family: 'JetBrains Mono', monospace; font-size: 18px; font-weight: 700; }
-.accordion-product-count.blue { color: var(--sidiz-blue-bright); }
-.accordion-product-count.rose { color: var(--accent-rose); }
-.accordion-meta { display: flex; align-items: center; gap: 14px; font-size: 11px; color: var(--text-muted); }
-.accordion-arrow { font-size: 12px; color: var(--text-muted); transition: transform 0.3s; }
-.accordion-item.open .accordion-arrow { transform: rotate(180deg); }
-.accordion-body { display: none; padding: 0 18px 18px; }
-.accordion-item.open .accordion-body { display: block; }
-
-/* MINI BAR */
-.mini-bar-row { display: flex; align-items: center; gap: 10px; margin-bottom: 6px; }
-.mini-bar-label { font-size: 11px; color: var(--text-secondary); width: 44px; text-align: right; flex-shrink: 0; }
-.mini-bar-track { flex: 1; height: 22px; background: rgba(0,0,0,0.06); border-radius: 5px; overflow: hidden; }
-.mini-bar-fill { height: 100%; border-radius: 5px; display: flex; align-items: center; padding-left: 8px; transition: width 0.8s cubic-bezier(0.4,0,0.2,1); }
-.mini-bar-fill span { font-size: 10px; font-weight: 600; font-family: 'JetBrains Mono', monospace; color: white; text-shadow: 0 1px 2px rgba(0,0,0,0.3); }
-.mini-bar-fill.brand { background: var(--gradient-brand); }
-.mini-bar-fill.rose { background: linear-gradient(135deg, #ff6b7a, #ffb347); }
-.mini-bar-fill.emerald { background: linear-gradient(135deg, #00c48c, #00c6d7); }
-.mini-bar-fill.violet { background: linear-gradient(135deg, #a78bfa, #0057b8); }
-
-/* BAR CHART */
-.bar-chart { display: flex; flex-direction: column; gap: 8px; }
-.bar-row { display: flex; align-items: center; gap: 10px; }
-.bar-label { font-size: 11px; color: var(--text-secondary); width: auto; min-width: 140px; text-align: left; }
-.bar-track { flex: 1; height: 26px; background: rgba(0,0,0,0.06); border-radius: 5px; overflow: hidden; }
-.bar-fill { height: 100%; border-radius: 5px; display: flex; align-items: center; padding-left: 8px; transition: width 0.8s cubic-bezier(0.4,0,0.2,1); }
-.bar-fill span { font-size: 10px; font-weight: 600; font-family: 'JetBrains Mono', monospace; color: white; }
-.bar-fill.brand { background: var(--gradient-brand); }
-
-/* ANALYSIS BOX */
-.analysis-box { background: linear-gradient(135deg, rgba(0,43,210,0.04), rgba(60,125,255,0.03)); border: 1px solid rgba(0,43,210,0.15); border-radius: var(--radius); padding: 20px; margin-bottom: 24px; }
-.analysis-box h4 { font-size: 13px; font-weight: 600; color: var(--sidiz-blue-bright); margin-bottom: 10px; display: flex; align-items: center; gap: 6px; }
-.analysis-item { display: flex; align-items: flex-start; gap: 8px; padding: 8px 0; border-bottom: 1px solid rgba(0,87,184,0.1); font-size: 12px; line-height: 1.7; color: var(--text-secondary); }
-.analysis-item:last-child { border-bottom: none; }
-.analysis-dot { width: 6px; height: 6px; border-radius: 50%; margin-top: 6px; flex-shrink: 0; }
-.analysis-dot.critical { background: var(--accent-rose); }
-.analysis-dot.warning { background: var(--accent-amber); }
-.analysis-dot.info { background: var(--sidiz-blue-bright); }
-
-/* COST */
+/* Cost cards */
 .cost-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px; margin-bottom: 24px; }
 .cost-card { background: var(--sidiz-card); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 16px; text-align: center; }
 .cost-label { font-size: 12px; color: var(--text-muted); margin-bottom: 6px; }
 .cost-value { font-size: 20px; font-weight: 700; font-family: 'JetBrains Mono', monospace; }
 .cost-sub { font-size: 12px; color: var(--text-muted); margin-top: 3px; }
 
-/* DATE FILTER */
-.date-filter { display: flex; align-items: center; gap: 12px; margin-bottom: 20px; flex-wrap: wrap; }
-.date-filter label { font-size: 12px; color: var(--text-muted); }
-.date-input { padding: 7px 12px; border-radius: 8px; border: 1px solid var(--border); background: var(--sidiz-card); color: var(--text-primary); font-size: 12px; font-family: 'JetBrains Mono', monospace; }
-.date-btn { padding: 7px 16px; border-radius: 8px; border: none; background: var(--sidiz-blue); color: white; font-size: 12px; font-weight: 600; cursor: pointer; transition: background 0.2s; }
+/* Analysis box */
+.analysis-box { background: linear-gradient(135deg, rgba(0,43,210,0.04), rgba(60,125,255,0.03)); border: 1px solid rgba(0,43,210,0.15); border-radius: var(--radius); padding: 20px; margin-bottom: 24px; }
+.analysis-box h4 { font-size: 13px; font-weight: 600; color: var(--sidiz-blue-bright); margin-bottom: 10px; display: flex; align-items: center; gap: 6px; }
+.analysis-item { display: flex; align-items: flex-start; gap: 8px; padding: 8px 0; border-bottom: 1px solid rgba(0,87,184,0.1); font-size: 12px; line-height: 1.7; color: var(--text-secondary); }
+.analysis-item:last-child { border-bottom: none; }
 
-/* SCROLLBAR */
+/* KPI note */
+.kpi-note-entry:hover .kpi-note-del { opacity: 1; }
+.kpi-note-del { opacity: 0.3; transition: opacity 0.15s; }
+
 ::-webkit-scrollbar { width: 5px; }
 ::-webkit-scrollbar-track { background: transparent; }
 ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
 
 @media (max-width: 1200px) {
   .kpi-grid { grid-template-columns: repeat(2, 1fr); }
-  .chart-row { grid-template-columns: 1fr; }
   .cost-grid { grid-template-columns: repeat(3, 1fr); }
 }
-
-/* 데이터 테이블 overflow for wide tables */
-.data-table-wrapper { overflow-x: auto; }
-
-/* KPI NOTE entries */
-.kpi-note-entry { font-size: 12px; line-height: 1.6; color: var(--text-primary); padding: 7px 8px; border-bottom: 1px solid rgba(0,0,0,0.05); }
 </style>
 </head>
 <body>
 
 <div class="main">
-  <div id="section-kpi">
 
-    <div class="header">
-      <div class="header-left">
-        <h1>KPI <span>현황</span></h1>
-        <p>품질경영위원회 발표 자료 — 고객클레임 및 실패비용 (독립 보고서)</p>
-      </div>
-      <div style="display:flex;align-items:center;gap:8px">
-        <label style="font-size:11px;color:var(--text-muted)">연도:</label>
-        <select id="kpiYearSelect" onchange="onKpiYearChange(this.value)" style="padding:6px 12px;border-radius:8px;border:1px solid var(--border);background:var(--sidiz-dark2);color:var(--text-primary);font-size:12px;font-family:'JetBrains Mono',monospace;cursor:pointer">
-          <option value="2026" selected>2026년</option>
-          <option value="2025">2025년</option>
-        </select>
-        <label style="font-size:11px;color:var(--text-muted)">브랜드:</label>
-        <select id="kpiBrandSelect" style="padding:6px 12px;border-radius:8px;border:1px solid var(--border);background:var(--sidiz-dark2);color:var(--text-primary);font-size:12px;cursor:pointer">
-          <option value="시디즈" selected>시디즈</option>
-        </select>
-      </div>
+<!-- ===== KPI ===== -->
+<div id="section-kpi">
+  <div class="header">
+    <div class="header-left"><h1>KPI <span>현황</span></h1><p>품질경영위원회 발표 자료 — 고객클레임 및 실패비용</p></div>
+    <div style="display:flex;align-items:center;gap:8px">
+      <label style="font-size:11px;color:var(--text-muted)">연도:</label>
+      <select id="kpiYearSelect" onchange="if(window.KpiModule) window.KpiModule.onKpiYearChange(this.value)" style="padding:6px 12px;border-radius:8px;border:1px solid var(--border);background:var(--sidiz-dark2);color:var(--text-primary);font-size:12px;font-family:'JetBrains Mono',monospace;cursor:pointer">
+        <option value="2026" selected>2026년</option>
+        <option value="2025">2025년</option>
+      </select>
+      <label style="font-size:11px;color:var(--text-muted)">브랜드:</label>
+      <select id="kpiBrandSelect" onchange="if(window.KpiModule) window.KpiModule.onKpiBrandChange(this.value)" style="padding:6px 12px;border-radius:8px;border:1px solid var(--border);background:var(--sidiz-dark2);color:var(--text-primary);font-size:12px;cursor:pointer">
+        <option value="all">전체</option>
+        <option value="시디즈">시디즈</option>
+      </select>
+    </div>
+  </div>
+  <div class="sub-tabs">
+    <button class="sub-tab active" onclick="showKpiTab('claim-kpi',this)">고객 클레임 현황</button>
+    <button class="sub-tab" onclick="showKpiTab('cost-kpi',this)">실패비용</button>
+  </div>
+
+  <!-- KPI Claim -->
+  <div id="kpi-claim-kpi" class="kpi-content">
+    <div class="section-title">고객클레임 현황 (품질경영위원회)</div>
+    <div class="kpi-grid" id="kpi-claim-kpi-cards">
+      <div class="kpi-card"><div class="kpi-label">로딩 중...</div><div class="kpi-value">-</div></div>
     </div>
 
-    <div class="sub-tabs">
-      <button class="sub-tab active" onclick="showKpiTab('claim-kpi',this)">고객 클레임 현황</button>
-      <button class="sub-tab" onclick="showKpiTab('cost-kpi',this)">실패비용</button>
-    </div>
-
-    <!-- ========== 고객클레임 현황 탭 ========== -->
-    <div id="kpi-claim-kpi" class="kpi-content">
-      <div class="section-title">고객클레임 현황 (품질경영위원회)</div>
-      <div id="kpi-claim-kpi-kpi-grid-wrap">
-        <div class="kpi-grid" id="kpiClaimKpiGrid">
-          <div class="kpi-card"><div class="kpi-label">로딩 중...</div><div class="kpi-value">-</div></div>
-        </div>
-      </div>
-
-      <!-- 콤보 차트 -->
-      <div class="chart-card" style="margin-bottom:24px;padding:24px">
-        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px">
-          <h3>클레임 건수 및 불량지수 추이</h3>
-          <div style="display:flex;align-items:center;gap:8px">
-            <label style="font-size:11px;color:var(--text-muted)">표시 범위:</label>
-            <select id="kpiMonthRange" onchange="onMonthRangeChange(this.value)" style="padding:4px 10px;border-radius:6px;border:1px solid var(--border);background:var(--sidiz-dark2);color:var(--text-primary);font-size:11px;font-family:'JetBrains Mono',monospace;cursor:pointer">
-              <option value="12">전체 (1~12월)</option>
-              <option value="1">~1월</option>
-              <option value="2">~2월</option>
-              <option value="3">~3월</option>
-              <option value="4">~4월</option>
-              <option value="5">~5월</option>
-              <option value="6">~6월</option>
-              <option value="7">~7월</option>
-              <option value="8">~8월</option>
-              <option value="9">~9월</option>
-              <option value="10">~10월</option>
-              <option value="11">~11월</option>
-            </select>
-          </div>
-        </div>
-        <p style="font-size:11px;color:var(--text-muted);margin-bottom:16px">막대: 월별 판정유형별 종합 건수 (국내+베트남) · 꺾은선: 불량지수(%) · 점선: 목표 1.50%</p>
-        <canvas id="comboChart" height="110"></canvas>
-      </div>
-
-      <!-- 메인 KPI 테이블 (동적 생성) -->
-      <div class="data-table-wrapper" id="kpiMainTable">
-        <div style="text-align:center;padding:30px;color:var(--text-muted)">⏳ KPI 데이터 로딩 중...</div>
-      </div>
-
-      <!-- 판정형태별 누적 합계 (JSON catTotal 기반 정적 표시) -->
-      <div style="margin-top:20px;background:var(--sidiz-card);border:1px solid var(--border);border-radius:12px;overflow:hidden">
-        <div style="display:flex;justify-content:space-between;align-items:center;padding:14px 20px;border-bottom:1px solid var(--border);background:rgba(0,87,184,0.06)">
-          <div style="display:flex;align-items:center;gap:10px">
-            <span style="font-size:16px">📊</span>
-            <span style="font-weight:600;font-size:14px;color:var(--text-primary)">2026년 1~8월 누적 분석</span>
-            <span style="font-size:11px;color:var(--text-muted)">DB 실측 데이터 기준 · 시디즈</span>
-          </div>
-        </div>
-        <div style="padding:20px">
-          <!-- 상단 요약 카드 3개 -->
-          <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:20px">
-            <div style="background:var(--sidiz-dark2);border:1px solid var(--border);border-radius:10px;padding:16px;text-align:center">
-              <div style="font-size:11px;color:var(--text-muted);margin-bottom:6px;text-transform:uppercase;letter-spacing:0.5px">1~8월 누적 판정종합</div>
-              <div style="font-size:32px;font-weight:900;font-family:'JetBrains Mono',monospace;color:var(--sidiz-blue-bright)">5,250</div>
-              <div style="font-size:11px;color:var(--text-muted);margin-top:4px">건</div>
-            </div>
-            <div style="background:var(--sidiz-dark2);border:1px solid var(--border);border-radius:10px;padding:16px;text-align:center">
-              <div style="font-size:11px;color:var(--text-muted);margin-bottom:6px;text-transform:uppercase;letter-spacing:0.5px">Top 제품 (T50)</div>
-              <div style="font-size:32px;font-weight:900;font-family:'JetBrains Mono',monospace;color:var(--accent-rose)">1,449</div>
-              <div style="font-size:11px;color:var(--text-muted);margin-top:4px">건 (누적)</div>
-            </div>
-            <div style="background:var(--sidiz-dark2);border:1px solid var(--border);border-radius:10px;padding:16px;text-align:center">
-              <div style="font-size:11px;color:var(--text-muted);margin-bottom:6px;text-transform:uppercase;letter-spacing:0.5px">7월 판정 건수</div>
-              <div style="font-size:32px;font-weight:900;font-family:'JetBrains Mono',monospace;color:var(--accent-amber)">799</div>
-              <div style="font-size:11px;color:var(--text-muted);margin-top:4px">건</div>
-            </div>
-          </div>
-
-          <!-- 판정유형별 합계 -->
-          <div style="background:var(--sidiz-dark2);border:1px solid var(--border);border-radius:10px;padding:16px;margin-bottom:16px">
-            <div style="font-size:12px;font-weight:600;color:var(--text-secondary);margin-bottom:12px">📋 판정유형별 누적 합계 (1~8월)</div>
-            <div id="catTotalDisplay"></div>
-          </div>
-
-          <!-- Top 10 제품별 현황 아코디언 -->
-          <div>
-            <div style="font-size:12px;font-weight:600;color:var(--text-secondary);margin-bottom:12px">🪑 제품별 Top 10 클레임 현황 (1~8월 누적)</div>
-            <div class="accordion" id="topItemsAccordion"></div>
-          </div>
-
-          <!-- 7월 상세 현황 -->
-          <div style="background:var(--sidiz-dark2);border:1px solid var(--border);border-radius:10px;padding:16px;margin-top:16px">
-            <div style="font-size:12px;font-weight:600;color:var(--text-secondary);margin-bottom:12px">📅 7월 상세 현황 (latestMonth)</div>
-            <div id="latestMonthDisplay"></div>
-          </div>
-        </div>
-      </div>
-
-      <!-- 판정유형별 테이블 (동적 생성) -->
-      <div class="section-title" style="margin-top:28px">판정유형별 클레임 현황 (월별)</div>
-      <div class="data-table-wrapper" id="kpiJudgementKr" style="margin-bottom:18px"></div>
-      <div class="data-table-wrapper" id="kpiJudgementVn"></div>
-    </div>
-
-    <!-- ========== 실패비용 탭 ========== -->
-    <div id="kpi-cost-kpi" class="kpi-content" style="display:none">
-      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px">
-        <div class="section-title" style="margin-bottom:0">실패비용 현황</div>
-        <div style="display:flex;gap:10px;align-items:center">
-          <select id="costYearSelect" onchange="onCostYearChange(this.value)" style="background:var(--sidiz-card);border:1px solid var(--border);color:var(--text-primary);padding:6px 12px;border-radius:8px;font-size:13px">
-            <option value="2026" selected>2026년</option>
-            <option value="2025">2025년</option>
-            <option value="2024">2024년</option>
-          </select>
-          <select id="costMonthRange" onchange="onCostMonthRangeChange(this.value)" style="background:var(--sidiz-card);border:1px solid var(--border);color:var(--text-primary);padding:6px 12px;border-radius:8px;font-size:13px">
+    <!-- Combo Chart -->
+    <div class="chart-card" style="margin-bottom:24px;padding:24px">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px">
+        <h3>클레임 건수 및 불량지수 추이</h3>
+        <div style="display:flex;align-items:center;gap:8px">
+          <label style="font-size:11px;color:var(--text-muted)">표시 범위:</label>
+          <select id="kpiMonthRange" onchange="if(window.KpiModule) window.KpiModule.onMonthRangeChange(this.value)" style="padding:4px 10px;border-radius:6px;border:1px solid var(--border);background:var(--sidiz-dark2);color:var(--text-primary);font-size:11px;font-family:'JetBrains Mono',monospace;cursor:pointer">
             <option value="12">전체 (1~12월)</option>
-            <option value="1">~1월</option><option value="2" selected>~2월</option><option value="3">~3월</option>
-            <option value="4">~4월</option><option value="5">~5월</option><option value="6">~6월</option>
-            <option value="7">~7월</option><option value="8">~8월</option><option value="9">~9월</option>
-            <option value="10">~10월</option><option value="11">~11월</option>
+            <option value="1">~1월</option>
+            <option value="2">~2월</option>
+            <option value="3">~3월</option>
+            <option value="4">~4월</option>
+            <option value="5">~5월</option>
+            <option value="6">~6월</option>
+            <option value="7">~7월</option>
+            <option value="8">~8월</option>
+            <option value="9">~9월</option>
+            <option value="10">~10월</option>
+            <option value="11">~11월</option>
           </select>
         </div>
       </div>
-      <div id="costKpiCards" class="cost-grid"></div>
-      <div class="chart-card" style="margin-bottom:24px;padding:24px">
-        <h3 style="margin-bottom:4px">실패비용 추이 (비용 + 매출액 대비 비율)</h3>
-        <p style="font-size:11px;color:var(--text-muted);margin-bottom:16px">막대: 하자보수비+바로스AS 합계(만원) · 꺾은선: 매출액 대비 비율(%) · 점선: 목표</p>
-        <canvas id="costComboChart" height="110"></canvas>
-      </div>
-      <div id="costDetailTable" class="data-table-wrapper"></div>
+      <p style="font-size:11px;color:var(--text-muted);margin-bottom:16px">막대: 월별 판정유형별 종합 건수 (국내+베트남) · 꺾은선: 불량지수(%) · 점선: 목표 1.50%</p>
+      <canvas id="comboChart" height="110"></canvas>
     </div>
 
-  </div><!-- /section-kpi -->
+    <!-- Main KPI Table (동적 생성) -->
+    <div class="data-table-wrapper" id="kpiMainTable">
+      <div style="text-align:center;padding:30px;color:var(--text-muted)">⏳ KPI 데이터 로딩 중...</div>
+    </div>
+
+    <!-- 자동 분석 카드 -->
+    <div style="margin-top:20px;background:var(--sidiz-card);border:1px solid var(--border);border-radius:12px;overflow:hidden" id="kpiAutoAnalysisWrap">
+      <div style="display:flex;justify-content:space-between;align-items:center;padding:14px 20px;border-bottom:1px solid var(--border);background:rgba(0,87,184,0.06);flex-wrap:wrap;gap:10px">
+        <div style="display:flex;align-items:center;gap:10px">
+          <span style="font-size:16px">📊</span>
+          <span style="font-weight:600;font-size:14px;color:var(--text-primary)">전월 대비 자동 분석</span>
+          <span style="font-size:11px;color:var(--text-muted)">시디즈 · 설계/제조/서비스/사양재검토/고객불만</span>
+        </div>
+        <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
+          <label style="font-size:11px;color:var(--text-muted)">전월</label>
+          <select id="analysisPrevMonth" style="padding:5px 10px;border-radius:6px;border:1px solid var(--border);background:var(--sidiz-dark2);color:var(--text-primary);font-size:12px;font-family:'JetBrains Mono',monospace"></select>
+          <span style="color:var(--text-muted);font-size:14px">→</span>
+          <label style="font-size:11px;color:var(--text-muted)">당월</label>
+          <select id="analysisCurMonth" style="padding:5px 10px;border-radius:6px;border:1px solid var(--border);background:var(--sidiz-dark2);color:var(--text-primary);font-size:12px;font-family:'JetBrains Mono',monospace"></select>
+          <button onclick="runKpiAutoAnalysis()" style="padding:6px 16px;background:var(--sidiz-blue);color:white;border:none;border-radius:8px;font-size:12px;font-weight:600;cursor:pointer">🔄 분석 생성</button>
+        </div>
+      </div>
+      <div id="kpiAnalysisEmpty" style="padding:28px;text-align:center;color:var(--text-muted);font-size:13px">
+        월을 선택하고 <b>분석 생성</b> 버튼을 클릭하면 자동으로 분석됩니다. (※ Standalone 모드: 집계 데이터 없음)
+      </div>
+      <div id="kpiAnalysisLoading" style="display:none;padding:28px;text-align:center;color:var(--accent-cyan);font-size:13px">⏳ 데이터 불러오는 중...</div>
+      <div id="kpiAnalysisResult" style="display:none;padding:20px">
+        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:20px" id="kpiAnSummaryCards"></div>
+        <div style="background:var(--sidiz-dark2);border:1px solid var(--border);border-radius:10px;padding:16px;margin-bottom:16px">
+          <div style="font-size:12px;font-weight:600;color:var(--text-secondary);margin-bottom:12px">📋 판정유형별 변화</div>
+          <div id="kpiAnCategoryTable" style="overflow-x:auto"></div>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px">
+          <div style="background:var(--sidiz-dark2);border:1px solid var(--border);border-radius:10px;padding:16px">
+            <div style="font-size:12px;font-weight:600;color:var(--text-secondary);margin-bottom:12px">🪑 제품별 Top 5</div>
+            <div id="kpiAnItemTable"></div>
+          </div>
+          <div style="background:var(--sidiz-dark2);border:1px solid var(--border);border-radius:10px;padding:16px">
+            <div style="font-size:12px;font-weight:600;color:var(--text-secondary);margin-bottom:12px">📈 전월대비 증감 TOP 5</div>
+            <div id="kpiAnPartTable"></div>
+          </div>
+        </div>
+        <!-- 특이사항 메모 -->
+        <div style="border-top:1px solid var(--border);padding-top:16px;margin-top:4px">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
+            <div style="font-size:12px;font-weight:600;color:var(--text-secondary)">📝 특이사항 메모</div>
+            <div style="display:flex;align-items:center;gap:8px">
+              <span id="kpiClaimNoteSaveStatus" style="font-size:11px;color:var(--accent-emerald)"></span>
+              <button id="kpiClaimNoteDelBtn" onclick="deleteSelectedKpiNotes('claim')" style="padding:5px 12px;background:#fff;color:#e74c3c;border:1px solid #e74c3c;border-radius:6px;font-size:11px;font-weight:600;cursor:pointer">🗑 선택 삭제</button>
+            </div>
+          </div>
+          <div style="display:flex;gap:6px;margin-bottom:8px">
+            <input id="kpiClaimNoteInput" type="text" placeholder="새 특이사항 입력 후 추가 (Enter 가능)"
+              onkeydown="if(event.key==='Enter'){event.preventDefault();addKpiNoteEntry('claim');}"
+              style="flex:1;background:var(--sidiz-card);border:1px solid var(--border);border-radius:6px;color:var(--text-primary);padding:8px 12px;font-size:12px;font-family:'Noto Sans KR',sans-serif;outline:none">
+            <button onclick="addKpiNoteEntry('claim')" style="padding:6px 14px;background:var(--sidiz-blue);color:#fff;border:none;border-radius:6px;font-size:11px;font-weight:600;cursor:pointer;white-space:nowrap">+ 추가</button>
+          </div>
+          <div id="kpiClaimNoteList" style="background:var(--sidiz-card);border:1px solid var(--border);border-radius:8px;padding:8px;min-height:60px"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 판정유형별 테이블 -->
+    <div class="section-title" style="margin-top:28px">판정유형별 클레임 현황 (월별)</div>
+    <div class="data-table-wrapper" id="kpiJudgementKr" style="margin-bottom:18px"></div>
+    <div class="data-table-wrapper" id="kpiJudgementVn"></div>
+  </div>
+
+  <!-- KPI Cost -->
+  <div id="kpi-cost-kpi" class="kpi-content" style="display:none">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px">
+      <div class="section-title" style="margin-bottom:0">실패비용 현황</div>
+      <div style="display:flex;gap:10px;align-items:center">
+        <select id="costYearSelect" onchange="CostModule.onCostYearChange(this.value)" style="background:var(--sidiz-card);border:1px solid var(--border);color:var(--text-primary);padding:6px 12px;border-radius:8px;font-size:13px">
+          <option value="2026">2026년</option>
+          <option value="2025">2025년</option>
+          <option value="2024">2024년</option>
+        </select>
+        <select id="costMonthRange" onchange="CostModule.onCostMonthRangeChange(this.value)" style="background:var(--sidiz-card);border:1px solid var(--border);color:var(--text-primary);padding:6px 12px;border-radius:8px;font-size:13px">
+          <option value="12">전체 (1~12월)</option>
+          <option value="1">~1월</option><option value="2">~2월</option><option value="3">~3월</option>
+          <option value="4">~4월</option><option value="5">~5월</option><option value="6">~6월</option>
+          <option value="7">~7월</option><option value="8">~8월</option><option value="9">~9월</option>
+          <option value="10">~10월</option><option value="11">~11월</option>
+        </select>
+      </div>
+    </div>
+    <div id="costKpiCards" class="cost-grid"></div>
+    <div class="chart-card" style="margin-bottom:24px;padding:24px">
+      <h3 style="margin-bottom:4px">실패비용 추이 (비용 + 매출액 대비 비율)</h3>
+      <p style="font-size:11px;color:var(--text-muted);margin-bottom:16px">막대: 하자보수비+바로스AS 합계(만원) · 꺾은선: 매출액 대비 비율(%) · 점선: 목표</p>
+      <canvas id="costComboChart" height="110"></canvas>
+    </div>
+    <div id="costDetailTable" class="data-table-wrapper"></div>
+
+    <!-- 실패비용 자동 분석 -->
+    <div style="margin-top:28px;background:var(--sidiz-card);border:1px solid var(--border);border-radius:12px;overflow:hidden" id="kpiCostAutoWrap">
+      <div style="display:flex;justify-content:space-between;align-items:center;padding:14px 20px;border-bottom:1px solid var(--border);background:rgba(231,76,60,0.05);flex-wrap:wrap;gap:10px">
+        <div style="display:flex;align-items:center;gap:10px">
+          <span style="font-size:16px">💰</span>
+          <span style="font-weight:600;font-size:14px;color:var(--text-primary)">전월 대비 자동 분석</span>
+          <span style="font-size:11px;color:var(--text-muted)">(판)하자보수비 · 바로스AS · 매출 대비 비율</span>
+        </div>
+        <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
+          <label style="font-size:11px;color:var(--text-muted)">전월</label>
+          <select id="costAnalysisPrevMonth" style="padding:5px 10px;border-radius:6px;border:1px solid var(--border);background:var(--sidiz-dark2);color:var(--text-primary);font-size:12px;font-family:'JetBrains Mono',monospace"></select>
+          <span style="color:var(--text-muted);font-size:14px">→</span>
+          <label style="font-size:11px;color:var(--text-muted)">당월</label>
+          <select id="costAnalysisCurMonth" style="padding:5px 10px;border-radius:6px;border:1px solid var(--border);background:var(--sidiz-dark2);color:var(--text-primary);font-size:12px;font-family:'JetBrains Mono',monospace"></select>
+          <button onclick="runCostAutoAnalysis()" style="padding:6px 16px;background:#c0392b;color:white;border:none;border-radius:8px;font-size:12px;font-weight:600;cursor:pointer">🔄 분석 생성</button>
+        </div>
+      </div>
+      <div id="costAnalysisEmpty" style="padding:28px;text-align:center;color:var(--text-muted);font-size:13px">
+        월을 선택하고 <b>분석 생성</b> 버튼을 클릭하면 자동으로 분석됩니다.
+      </div>
+      <div id="costAnalysisLoading" style="display:none;padding:28px;text-align:center;color:var(--accent-rose);font-size:13px">⏳ 데이터 불러오는 중...</div>
+      <div id="costAnalysisResult" style="display:none;padding:20px">
+        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:20px" id="costAnSummaryCards"></div>
+        <div style="background:var(--sidiz-dark2);border:1px solid var(--border);border-radius:10px;padding:16px;margin-bottom:16px">
+          <div style="font-size:12px;font-weight:600;color:var(--text-secondary);margin-bottom:12px">📋 항목별 상세 비교</div>
+          <div id="costAnDetailTable" style="overflow-x:auto"></div>
+        </div>
+        <div style="border-top:1px solid var(--border);padding-top:16px">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
+            <div style="font-size:12px;font-weight:600;color:var(--text-secondary)">📝 특이사항 메모</div>
+            <div style="display:flex;align-items:center;gap:8px">
+              <span id="kpiCostNoteSaveStatus" style="font-size:11px;color:var(--accent-emerald)"></span>
+              <button id="kpiCostNoteDelBtn" onclick="deleteSelectedKpiNotes('cost')" style="padding:5px 12px;background:#fff;color:#e74c3c;border:1px solid #e74c3c;border-radius:6px;font-size:11px;font-weight:600;cursor:pointer">🗑 선택 삭제</button>
+            </div>
+          </div>
+          <div style="display:flex;gap:6px;margin-bottom:8px">
+            <input id="kpiCostNoteInput" type="text" placeholder="새 특이사항 입력 후 추가 (Enter 가능)"
+              onkeydown="if(event.key==='Enter'){event.preventDefault();addKpiNoteEntry('cost');}"
+              style="flex:1;background:var(--sidiz-card);border:1px solid var(--border);border-radius:6px;color:var(--text-primary);padding:8px 12px;font-size:12px;font-family:'Noto Sans KR',sans-serif;outline:none">
+            <button onclick="addKpiNoteEntry('cost')" style="padding:6px 14px;background:#c0392b;color:#fff;border:none;border-radius:6px;font-size:11px;font-weight:600;cursor:pointer;white-space:nowrap">+ 추가</button>
+          </div>
+          <div id="kpiCostNoteList" style="background:var(--sidiz-card);border:1px solid var(--border);border-radius:8px;padding:8px;min-height:60px"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
 </div><!-- /main -->
 
-<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.2.0/dist/chartjs-plugin-datalabels.min.js"></script>
 <script>
-// ============================================================
-// KPI DATA (from kpi-data.js, overridden with kpi_export.json)
-// ============================================================
+if (typeof Chart !== 'undefined') {
+  Chart.defaults.color = '#6b6b80';
+  Chart.defaults.borderColor = 'rgba(0,0,0,0.07)';
+  Chart.defaults.plugins = Chart.defaults.plugins || {};
+}
+</script>
+
+<script>
+// ======================================================
+// kpi-data.js (인라인, Supabase 제거)
+// ======================================================
 const KPI_DATA = {
   '2025': {
     sales: {
-      kr:  [19188,25611,26634,22664,16594,15728,20759,19984,18343,15763,18826,18874],
-      vn:  [14003,18428,20237,16333,12583,10609,12931,14754,15927,13178,12220,15709],
+      kr:  [19188, 25611, 26634, 22664, 16594, 15728, 20759, 19984, 18343, 15763, 18826, 18874],
+      vn:  [14003, 18428, 20237, 16333, 12583, 10609, 12931, 14754, 15927, 13178, 12220, 15709],
     },
     judgement: {
-      kr:  [340,503,479,401,359,373,423,546,539,506,528,381],
-      vn:  [183,255,289,319,339,291,262,280,328,271,331,273],
+      kr:  [340, 503, 479, 401, 359, 373, 423, 546, 539, 506, 528, 381],
+      vn:  [183, 255, 289, 319, 339, 291, 262, 280, 328, 271, 331, 273],
+    },
+    claims: {
+      kr:  [334, 479, 462, 399, 355, 369, 404, 528, 529, 491, 490, 370],
+      vn:  [169, 224, 257, 310, 327, 284, 255, 271, 318, 263, 320, 275],
     },
     detail_kr: {
-      '제조':      [19,60,40,32,15,35,18,36,38,36,64,35],
-      '설계':      [144,212,188,185,155,165,211,266,263,227,205,147],
-      '서비스':    [4,11,17,4,5,8,4,6,4,6,10,11],
-      '고객불만':  [62,129,118,80,100,96,107,99,114,113,100,null],
-      '사양재검토':[111,91,116,100,84,69,83,139,120,124,149,107],
+      '제조': [19, 60, 40, 32, 15, 35, 18, 36, 38, 36, 64, 35],
+      '설계': [144, 212, 188, 185, 155, 165, 211, 266, 263, 227, 205, 147],
+      '서비스': [4, 11, 17, 4, 5, 8, 4, 6, 4, 6, 10, 11],
+      '고객불만': [62, 129, 118, 80, 100, 96, 107, 99, 114, 113, 100, null],
+      '사양재검토': [111, 91, 116, 100, 84, 69, 83, 139, 120, 124, 149, 107],
     },
     detail_vn: {
-      '제조':      [27,41,25,95,139,79,25,49,39,45,57,79],
-      '설계':      [46,56,69,72,89,121,138,140,161,111,101,49],
-      '서비스':    [8,19,30,5,3,5,1,3,3,2,3,6],
-      '고객불만':  [61,76,86,64,70,59,57,41,77,58,76,null],
-      '사양재검토':[41,63,79,83,38,27,41,47,48,55,94,62],
+      '제조': [27, 41, 25, 95, 139, 79, 25, 49, 39, 45, 57, 79],
+      '설계': [46, 56, 69, 72, 89, 121, 138, 140, 161, 111, 101, 49],
+      '서비스': [8, 19, 30, 5, 3, 5, 1, 3, 3, 2, 3, 6],
+      '고객불만': [61, 76, 86, 64, 70, 59, 57, 41, 77, 58, 76, null],
+      '사양재검토': [41, 63, 79, 83, 38, 27, 41, 47, 48, 55, 94, 62],
     },
     prevYearAvg: { claims_kr: 434, claims_vn: 273 },
     target: 0.015,
   },
   '2026': {
-    // ※ 1~3월: kpi_export.json DB 실측 기준으로 수정
-    // ※ 4~8월: kpi_export.json 기반 + 국내/베트남 57%/43% 비율 추정
     sales: {
-      kr:  [20726,21632,21457, 0,0,0,0,0,0,0,0,0],
-      vn:  [16124,17593,13264, 0,0,0,0,0,0,0,0,0],
+      kr:  [20726, 21632, 21457, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+      vn:  [16124, 17593, 13264, 0, 0, 0, 0, 0, 0, 0, 0, 0],
     },
     judgement: {
-      kr:  [394,335,365, 464,361,438,456,206, 0,0,0,0],
-      vn:  [299,208,275, 350,270,330,343,156, 0,0,0,0],
+      kr:  [394, 335, 257, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+      vn:  [299, 208, 204, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    },
+    claims: {
+      kr:  [394, 335, 257, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+      vn:  [299, 208, 204, 0, 0, 0, 0, 0, 0, 0, 0, 0],
     },
     detail_kr: {
-      '제조':      [36,  29,  61,  56, 30, 48, 46, 22, 0,0,0,0],
-      '설계':      [151, 117,  96, 135,124,162,182, 97, 0,0,0,0],
-      '서비스':    [6,   7,    9,  12,  5,  3,  6,  4, 0,0,0,0],
-      '고객불만':  [113, 84,   99, 101, 87, 78, 75, 32, 0,0,0,0],
-      '사양재검토':[88,  98,  100, 160,115,147,147, 51, 0,0,0,0],
+      '제조':      [36,  29,  32, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+      '설계':      [151, 117,  88, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+      '서비스':    [6,   7,    5,  0, 0, 0, 0, 0, 0, 0, 0, 0],
+      '고객불만':  [113, 84,   68, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+      '사양재검토':[88,  98,   64, 0, 0, 0, 0, 0, 0, 0, 0, 0],
     },
     detail_vn: {
-      '제조':      [75,  33,  46,  42, 22, 36, 35, 16, 0,0,0,0],
-      '설계':      [56,  46,  73, 101, 93,123,137, 73, 0,0,0,0],
-      '서비스':    [12,  8,    7,   9,  3,  2,  4,  3, 0,0,0,0],
-      '고객불만':  [78,  61,  74,  77, 65, 58, 56, 25, 0,0,0,0],
-      '사양재검토':[78,  60,  75, 121, 87,111,111, 39, 0,0,0,0],
+      '제조':      [75,  33,  42, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+      '설계':      [56,  46,  37, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+      '서비스':    [12,  8,   5,  0, 0, 0, 0, 0, 0, 0, 0, 0],
+      '고객불만':  [78,  61,  53, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+      '사양재검토':[78,  60,  67, 0, 0, 0, 0, 0, 0, 0, 0, 0],
     },
     prevYearAvg: { claims_kr: 434, claims_vn: 273 },
     target: 0.015,
@@ -390,13 +407,14 @@ const KPI_DATA = {
 
 const MONTHS = ['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'];
 let _kpiComboChart = null;
-let _kpiMonthRange = 7; // 2026-08-24 기준 전월까지
+let _kpiMonthRange = 12;
+let _kpiBrandFilter = 'all';
 
 function fmt(v) { return v != null && v !== 0 ? Number(v).toLocaleString() : '-'; }
 
-// ============================================================
-// KPI CLAIM 렌더링
-// ============================================================
+// Supabase 없음 — no-op
+async function updateKpiFromSupabase(year) { return; }
+
 function renderKpiClaimSection(year) {
   const data = KPI_DATA[year]; if (!data) return;
   const range = _kpiMonthRange;
@@ -421,12 +439,10 @@ function renderKpiClaimSection(year) {
     : '-';
 
   let lastMonth = 0;
-  for (let i = range-1; i >= 0; i--) {
-    if ((data.judgement.kr[i]||0)+(data.judgement.vn[i]||0) > 0) { lastMonth = i; break; }
-  }
+  for (let i = range-1; i >= 0; i--) { if ((data.judgement.kr[i]||0)+(data.judgement.vn[i]||0) > 0) { lastMonth = i; break; } }
   const mc = lastMonth + 1;
 
-  const kpiGrid = document.querySelector('#kpi-claim-kpi .kpi-grid');
+  const kpiGrid = document.querySelector('#kpi-claim-kpi-cards');
   if (kpiGrid) {
     kpiGrid.innerHTML = `
       <div class="kpi-card"><div class="kpi-label">판정종합 (${mc}월 누적)</div><div class="kpi-value" style="color:var(--sidiz-blue-bright)">${fmt(totalJ)}</div><div class="kpi-change">국내 ${fmt(krJTotal)} + 베트남 ${fmt(vnJTotal)}</div></div>
@@ -452,7 +468,7 @@ function updateKpiComboChart(data, year, range) {
     if (i >= range) { defIdx.push(null); continue; }
     const tc = (data.judgement.kr[i]||0) + (data.judgement.vn[i]||0);
     const ts = (data.sales.kr[i]||0) + (data.sales.vn[i]||0);
-    defIdx.push(ts > 0 ? parseFloat(((tc/ts)*100).toFixed(2)) : null);
+    defIdx.push(ts > 0 ? parseFloat(((tc/ts)*100).toFixed(2)) : 0);
   }
 
   const krBg = krJ.map((v,i) => i < range ? 'rgba(0,43,210,0.80)' : 'rgba(0,43,210,0.10)');
@@ -524,7 +540,7 @@ function updateKpiComboChart(data, year, range) {
       scales: {
         x: { stacked: true, grid: { color: 'rgba(0,0,0,0.05)', drawTicks: false }, ticks: { color: '#666677', font: { size: 12, family: "'Noto Sans KR'" } } },
         y: { stacked: true, position: 'left', title: { display: true, text: '판정종합 건수', color: '#666677', font: { size: 12 } }, grid: { color: 'rgba(0,0,0,0.05)' }, ticks: { color: '#666677', font: { size: 11, family: "'JetBrains Mono'" }, callback: v => v.toLocaleString() }, min: 0, max: 1000 },
-        y1: { position: 'right', title: { display: true, text: '불량지수(%)', color: '#E6A800', font: { size: 12 } }, grid: { drawOnChartArea: false }, ticks: { color: '#E6A800', font: { size: 11, family: "'JetBrains Mono'" }, callback: v => v+'%' }, min: 0, max: 3.5 }
+        y1: { position: 'right', title: { display: true, text: '불량지수(%)', color: '#E6A800', font: { size: 12 } }, grid: { drawOnChartArea: false }, ticks: { color: '#E6A800', font: { size: 11, family: "'JetBrains Mono'" }, callback: v=>v+'%' }, min: 0, max: 3.5 }
       }
     }
   });
@@ -618,54 +634,73 @@ function renderKpiJudgementTables(data, year, range) {
   vnC.innerHTML = build('🇻🇳','베트남', data.detail_vn, pd?.detail_vn);
 }
 
-function onKpiYearChange(year) {
+function _defaultMonthRangeFor(year) {
   const now = new Date();
   const cy = now.getFullYear();
   const cm = now.getMonth() + 1;
-  if (parseInt(year) >= cy) {
-    _kpiMonthRange = Math.max(1, cm - 1);
-  } else {
-    _kpiMonthRange = 12;
-  }
+  if (parseInt(year) >= cy) return Math.max(1, cm - 1);
+  return 12;
+}
+function _applyDefaultMonthRange(year) {
+  const def = _defaultMonthRangeFor(year);
+  _kpiMonthRange = def;
   const sel = document.getElementById('kpiMonthRange');
-  if (sel) sel.value = String(_kpiMonthRange);
-  renderKpiClaimSection(year);
+  if (sel) sel.value = String(def);
 }
 
+async function onKpiYearChange(year) {
+  document.getElementById('kpiYearSelect').value = year;
+  _applyDefaultMonthRange(year);
+  renderKpiClaimSection(year);
+}
+async function onKpiBrandChange(brand) {
+  _kpiBrandFilter = brand;
+  const year = document.getElementById('kpiYearSelect')?.value || '2026';
+  renderKpiClaimSection(year);
+}
 function onMonthRangeChange(val) {
   _kpiMonthRange = parseInt(val);
   const year = document.getElementById('kpiYearSelect')?.value || '2026';
   renderKpiClaimSection(year);
 }
+async function initKpiSection() {
+  const year = document.getElementById('kpiYearSelect')?.value || '2026';
+  _applyDefaultMonthRange(year);
+  renderKpiClaimSection(year);
+}
 
-// ============================================================
-// COST DATA (from cost-data.js)
-// ============================================================
+window.KpiModule = { initKpiSection, onKpiYearChange, onKpiBrandChange, onMonthRangeChange, renderKpiClaimSection, KPI_DATA };
+</script>
+
+<script>
+// ======================================================
+// cost-data.js (인라인, Supabase 제거)
+// ======================================================
 const COST_DATA = {
   '2024': {
-    revenue:      [9388088163,10099789228,10759040631,8393112900,8277670981,8317321343,8715170022,8827160068,7128773347,8667478797,0,0],
-    haza_product:  [20564500,22070200,34356900,25110582,22718264,25517000,27060300,26943400,19349500,17776950,0,0],
-    haza_material: [23311784,38679032,5886210,24195735,22511307,18339909,22096349,20658457,31562479,23967094,0,0],
-    haza_t50re:    [0,0,0,0,0,8091414,14695521,23682641,23848110,9758343,0,0],
-    haza_t50re_labor:[0,0,0,0,0,0,3828752,3249000,0,2210000,0,0],
-    haza_claim:    [5513231,4185565,4971713,4464210,3180941,4225914,9645039,7938550,9126420,10371200,0,0],
-    haza_subtotal: [49389515,64934797,45214823,53770527,48410512,56174237,77325961,82472048,60038399,52115244,0,0],
-    je_haza:       [176307,372965,272478,392733,102965,208124,110535,361566,120993,154329,0,0],
-    baros_contact: [46345890,44594110,57074500,54339600,51374300,50324200,65398400,65976700,57868900,57488500,0,0],
-    baros_as:      [14977750,22971400,19595200,23766900,22790800,23063200,28715500,30224700,21814700,24538700,0,0],
-    baros_logistics:[7244390,9053520,14918810,13766880,13159500,14052410,17335390,16831820,12991160,14552820,0,0],
-    baros_subtotal:[68568030,76619030,91588510,91873380,87324600,87439810,111449290,113033220,92674760,96580020,0,0],
+    revenue:      [9388088163, 10099789228, 10759040631, 8393112900, 8277670981, 8317321343, 8715170022, 8827160068, 7128773347, 8667478797, 0, 0],
+    haza_product:  [20564500, 22070200, 34356900, 25110582, 22718264, 25517000, 27060300, 26943400, 19349500, 17776950, 0, 0],
+    haza_material: [23311784, 38679032, 5886210, 24195735, 22511307, 18339909, 22096349, 20658457, 31562479, 23967094, 0, 0],
+    haza_t50re:    [0, 0, 0, 0, 0, 8091414, 14695521, 23682641, 23848110, 9758343, 0, 0],
+    haza_t50re_labor: [0, 0, 0, 0, 0, 0, 3828752, 3249000, 0, 2210000, 0, 0],
+    haza_claim:    [5513231, 4185565, 4971713, 4464210, 3180941, 4225914, 9645039, 7938550, 9126420, 10371200, 0, 0],
+    haza_subtotal: [49389515, 64934797, 45214823, 53770527, 48410512, 56174237, 77325961, 82472048, 60038399, 52115244, 0, 0],
+    je_haza:       [176307, 372965, 272478, 392733, 102965, 208124, 110535, 361566, 120993, 154329, 0, 0],
+    baros_contact: [46345890, 44594110, 57074500, 54339600, 51374300, 50324200, 65398400, 65976700, 57868900, 57488500, 0, 0],
+    baros_as:      [14977750, 22971400, 19595200, 23766900, 22790800, 23063200, 28715500, 30224700, 21814700, 24538700, 0, 0],
+    baros_logistics:[7244390, 9053520, 14918810, 13766880, 13159500, 14052410, 17335390, 16831820, 12991160, 14552820, 0, 0],
+    baros_subtotal:[68568030, 76619030, 91588510, 91873380, 87324600, 87439810, 111449290, 113033220, 92674760, 96580020, 0, 0],
     prevYearAvg: { revenue:8977554854, haza_product:24644612, haza_material:20393062, haza_t50re:0, haza_t50re_labor:0, haza_claim:9193395, haza_subtotal:54231069, je_haza:743804, baros_contact:38700619, baros_as:15910067, baros_logistics:7397413, baros_subtotal:62008099 },
     target: { revenue:8528677111, haza_product:21528000, haza_material:18791000, haza_t50re:0, haza_t50re_labor:0, haza_claim:5575507, haza_subtotal:45894507, je_haza:629464, baros_contact:33056545, baros_as:13000859, baros_logistics:6418625, baros_subtotal:52476029, ratio:0.0116 },
   },
   '2025': {
     revenue:       [0,0,0,0,0,0,0,0,0,0,0,0],
     haza_product:  [0,0,0,0,0,0,0,0,0,0,0,0],
-    haza_general_return:[0,0,0,0,0,0,0,0,0,0,0,0],
+    haza_general_return: [0,0,0,0,0,0,0,0,0,0,0,0],
     haza_lig:      [0,0,0,0,0,0,0,0,0,0,0,0],
     haza_material: [0,0,0,0,0,0,0,0,0,0,0,0],
     haza_t50re:    [0,0,0,0,0,0,0,0,0,0,0,0],
-    haza_t50re_labor:[0,0,0,0,0,0,0,0,0,0,0,0],
+    haza_t50re_labor: [0,0,0,0,0,0,0,0,0,0,0,0],
     haza_claim:    [0,0,0,0,0,0,0,0,0,0,0,0],
     haza_subtotal: [0,0,0,0,0,0,0,0,0,0,0,0],
     je_haza:       [0,0,0,0,0,0,0,0,0,0,0,0],
@@ -678,20 +713,20 @@ const COST_DATA = {
     yearAvg: { revenue:9013587231, haza_product:32069596, haza_general_return:3768793, haza_lig:6871433, haza_material:22003917, haza_t50re:3881271, haza_t50re_labor:0, haza_claim:5299525, haza_subtotal:70458817, je_haza:102049, baros_contact:56994942, baros_as:23935258, baros_logistics:13246437, baros_subtotal:94176637 },
   },
   '2026': {
-    revenue:       [9610981883,10180000000,0,0,0,0,0,0,0,0,0,0],
-    haza_general_return:[7909300,0,0,0,0,0,0,0,0,0,0,0],
-    haza_product:  [45972315,29730000,0,0,0,0,0,0,0,0,0,0],
-    haza_lig:      [0,0,0,0,0,0,0,0,0,0,0,0],
-    haza_material: [20250627,17240000,0,0,0,0,0,0,0,0,0,0],
-    haza_t50re:    [0,0,0,0,0,0,0,0,0,0,0,0],
-    haza_t50re_labor:[0,0,0,0,0,0,0,0,0,0,0,0],
-    haza_claim:    [5445360,4270000,0,0,0,0,0,0,0,0,0,0],
-    haza_subtotal: [71668302,51240000,0,0,0,0,0,0,0,0,0,0],
-    je_haza:       [0,60000,0,0,0,0,0,0,0,0,0,0],
-    baros_contact: [54773900,45590000,0,0,0,0,0,0,0,0,0,0],
-    baros_as:      [26377400,23970000,0,0,0,0,0,0,0,0,0,0],
-    baros_logistics:[9698220,7330000,0,0,0,0,0,0,0,0,0,0],
-    baros_subtotal:[90849520,76890000,0,0,0,0,0,0,0,0,0,0],
+    revenue:       [9610981883, 10180000000, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    haza_general_return: [7909300, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    haza_product:  [45972315, 29730000, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    haza_lig:      [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    haza_material: [20250627, 17240000, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    haza_t50re:    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    haza_t50re_labor: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    haza_claim:    [5445360, 4270000, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    haza_subtotal: [71668302, 51240000, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    je_haza:       [0, 60000, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    baros_contact: [54773900, 45590000, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    baros_as:      [26377400, 23970000, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    baros_logistics:[9698220, 7330000, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    baros_subtotal:[90849520, 76890000, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
     prevYearAvg: { revenue:9013587231, haza_product:32069596, haza_general_return:3768793, haza_lig:6871433, haza_material:22003917, haza_t50re:3881271, haza_t50re_labor:0, haza_claim:5299525, haza_subtotal:70458817, je_haza:102049, baros_contact:56994942, baros_as:23935258, baros_logistics:13246437, baros_subtotal:94176637 },
     target: { revenue:10500000000, haza_product:18500000, haza_material:17000000, haza_t50re:3500000, haza_t50re_labor:800000, haza_claim:5000000, haza_subtotal:44800000, je_haza:100000, baros_contact:43000000, baros_as:17000000, baros_logistics:10000000, baros_subtotal:70000000, ratio:0.0109 },
   }
@@ -699,13 +734,16 @@ const COST_DATA = {
 
 const COST_MONTHS = ['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'];
 let _costComboChart = null;
-let _costMonthRange = 2; // 2026년은 2개월 데이터
+let _costMonthRange = 12;
 
 function costFmtMan(v) { return v ? Math.round(v / 10000).toLocaleString() : '-'; }
 function costFmtManUnit(v) { return v ? Math.round(v / 10000).toLocaleString() + '만' : '-'; }
 function costFmtEok(v) { return v ? (v / 100000000).toFixed(1) + '억' : '-'; }
 
-function renderCostSection(year) {
+// Supabase 없음 — no-op
+async function loadFailureCostsFromSupabase(year) { return; }
+
+async function renderCostSection(year) {
   const data = COST_DATA[year]; if (!data) return;
   const range = _costMonthRange;
   const py = String(parseInt(year) - 1);
@@ -729,7 +767,6 @@ function renderCostCards(data, year, range) {
   const targetRatio = data.target?.ratio ? (data.target.ratio * 100).toFixed(2) : '1.09';
   const hazaAvg = Math.round(hazaTotal / mc);
   const barosAvg = Math.round(barosTotal / mc);
-
   container.innerHTML = `
     <div class="cost-card"><div class="cost-label">하자보수비 (월평균)</div><div class="cost-value" style="color:var(--accent-rose)">${costFmtManUnit(hazaAvg)}</div><div class="cost-sub">목표: ${costFmtManUnit(data.target?.haza_subtotal)}</div></div>
     <div class="cost-card"><div class="cost-label">바로스 AS 용역료 (월평균)</div><div class="cost-value" style="color:var(--accent-amber)">${costFmtManUnit(barosAvg)}</div><div class="cost-sub">목표: ${costFmtManUnit(data.target?.baros_subtotal)}</div></div>
@@ -741,19 +778,15 @@ function renderCostCards(data, year, range) {
 function renderCostComboChart(data, year, range) {
   const ctx = document.getElementById('costComboChart'); if (!ctx) return;
   if (_costComboChart) _costComboChart.destroy();
-
   const hazaM = data.haza_subtotal.map((v, i) => i < range ? Math.round((v || 0) / 10000) : 0);
   const jeHazaM = (data.je_haza || Array(12).fill(0)).map((v, i) => i < range ? Math.round((v || 0) / 10000) : 0);
   const barosM = data.baros_subtotal.map((v, i) => i < range ? Math.round((v || 0) / 10000) : 0);
-
   const ratioArr = data.revenue.map((rev, i) => {
     if (i >= range || !rev) return null;
     const cost = (data.haza_subtotal[i] || 0) + (data.je_haza?.[i] || 0) + (data.baros_subtotal[i] || 0);
     return rev > 0 ? parseFloat(((cost / rev) * 100).toFixed(2)) : null;
   });
-
   const targetRatio = data.target?.ratio ? (data.target.ratio * 100) : 1.09;
-
   const rangeOverlay = {
     id: 'costRangeOverlay',
     beforeDraw(chart) {
@@ -764,7 +797,6 @@ function renderCostComboChart(data, year, range) {
       c.fillRect(startX, top, right - startX, bottom - top); c.restore();
     }
   };
-
   const costTotalLabel = {
     id: 'costTotalLabel',
     afterDatasetsDraw(chart) {
@@ -780,15 +812,14 @@ function renderCostComboChart(data, year, range) {
       c.restore();
     }
   };
-
   _costComboChart = new Chart(ctx, {
     type: 'bar',
     data: {
       labels: COST_MONTHS,
       datasets: [
-        { label: '(판)하자보수비', data: hazaM, backgroundColor: 'rgba(255,76,106,0.78)', borderWidth: 0, borderRadius: 6, borderSkipped: false, order: 3, yAxisID: 'y' },
-        { label: '(제)하자보수비', data: jeHazaM, backgroundColor: 'rgba(148,163,184,0.70)', borderWidth: 0, borderRadius: 6, borderSkipped: false, order: 3, yAxisID: 'y' },
-        { label: '바로스 AS', data: barosM, backgroundColor: 'rgba(230,168,0,0.78)', borderWidth: 0, borderRadius: 6, borderSkipped: false, order: 3, yAxisID: 'y' },
+        { label: '(판)하자보수비', data: hazaM, backgroundColor: 'rgba(255,76,106,0.78)', borderColor: 'transparent', borderWidth: 0, borderRadius: 6, borderSkipped: false, order: 3, yAxisID: 'y' },
+        { label: '(제)하자보수비', data: jeHazaM, backgroundColor: 'rgba(148,163,184,0.70)', borderColor: 'transparent', borderWidth: 0, borderRadius: 6, borderSkipped: false, order: 3, yAxisID: 'y' },
+        { label: '바로스 AS', data: barosM, backgroundColor: 'rgba(230,168,0,0.78)', borderColor: 'transparent', borderWidth: 0, borderRadius: 6, borderSkipped: false, order: 3, yAxisID: 'y' },
         { label: '매출 대비 비율(%)', data: ratioArr, type: 'line', borderColor: '#7c5fe6', backgroundColor: 'rgba(124,95,230,0.08)', borderWidth: 2.5, pointRadius: 5, pointBackgroundColor: '#ffffff', pointBorderColor: '#7c5fe6', pointBorderWidth: 2, pointHoverRadius: 7, tension: 0.4, fill: false, order: 1, yAxisID: 'y1', spanGaps: false },
         { label: '목표 (' + targetRatio.toFixed(2) + '%)', data: Array(12).fill(targetRatio), type: 'line', borderColor: 'rgba(0,184,122,0.65)', borderWidth: 2, borderDash: [6, 4], pointRadius: 0, fill: false, order: 2, yAxisID: 'y1' }
       ]
@@ -800,8 +831,7 @@ function renderCostComboChart(data, year, range) {
       plugins: {
         legend: { position: 'top', align: 'end', labels: { color: '#555566', font: { size: 12, family: "'Noto Sans KR'", weight: '600' }, usePointStyle: true, pointStyle: 'rectRounded', padding: 18, boxWidth: 14 } },
         tooltip: { backgroundColor: '#ffffff', titleColor: '#111111', bodyColor: '#444455', borderColor: '#E2E2EA', borderWidth: 1, cornerRadius: 10, padding: 12,
-          titleFont: { family: "'Noto Sans KR'", weight: '700' },
-          bodyFont: { family: "'Noto Sans KR'" },
+          titleFont: { family: "'Noto Sans KR'", weight: '700' }, bodyFont: { family: "'Noto Sans KR'" },
           callbacks: { label: c => c.dataset.yAxisID === 'y1' ? ' ' + c.dataset.label + ': ' + c.parsed.y + '%' : ' ' + c.dataset.label + ': ' + (c.parsed.y || 0).toLocaleString() + '만원' }
         }
       },
@@ -819,49 +849,34 @@ function renderCostTable(data, year, range, pd, py) {
   const prevAvg = data.prevYearAvg || {};
   const tgt = data.target || {};
   const yAvg = data.yearAvg;
-
   function avg(arr) { const v = arr.filter(x => x && x > 0); return v.length > 0 ? Math.round(v.reduce((s, x) => s + x, 0) / v.length) : 0; }
   function mc(arr) { return arr.map((v, i) => { const dim = i >= range ? ' style="opacity:0.25"' : ''; return `<td${dim}>${costFmtMan(v)}</td>`; }).join(''); }
   function cumul(arr) { return arr.slice(0, range).reduce((s, v) => s + (v || 0), 0); }
-  function prevAvgFmt(key) {
-    if (yAvg && yAvg[key]) return costFmtMan(yAvg[key]);
-    if (prevAvg[key]) return costFmtMan(prevAvg[key]);
-    return '-';
-  }
+  function prevAvgFmt(key) { if (yAvg && yAvg[key]) return costFmtMan(yAvg[key]); if (prevAvg[key]) return costFmtMan(prevAvg[key]); return '-'; }
   function tgtFmt(key) { return tgt[key] ? costFmtMan(tgt[key]) : '-'; }
   function yearAvgFmt(arr) { const a = avg(arr); return a > 0 ? costFmtMan(a) : '-'; }
-
   const mh = COST_MONTHS.map(m => `<th>${m}</th>`).join('');
   const rangeLabel = range < 12 ? ` · ~${range}월 강조` : '';
-
   const computedHazaSub = data.haza_subtotal.map((v, i) => v || (
     (data.haza_general_return?.[i] || 0) + (data.haza_product[i] || 0) + (data.haza_lig?.[i] || 0) +
-    (data.haza_material[i] || 0) + (data.haza_t50re[i] || 0) + (data.haza_t50re_labor?.[i] || 0) + (data.haza_claim[i] || 0)
+    (data.haza_material[i] || 0) + (data.haza_t50re?.[i] || 0) + (data.haza_t50re_labor?.[i] || 0) + (data.haza_claim[i] || 0)
   ));
   const total = computedHazaSub.map((h, i) => (h || 0) + (data.je_haza?.[i] || 0) + (data.baros_subtotal[i] || 0));
   const ratioArr = data.revenue.map((rev, i) => {
     if (!rev || rev === 0) return '-';
     return ((total[i] / rev) * 100).toFixed(2) + '%';
   });
-
   let h = `<div class="data-table-header"><h3>하자보수비 및 바로스 용역료 상세 (${year}년${rangeLabel}, 단위: 만원)</h3></div>
   <table class="data-table"><thead><tr><th style="text-align:left" colspan="2">구분</th><th style="text-align:center">${py}평균</th><th style="text-align:center">${year}목표</th><th style="text-align:center">${year}평균</th>${mh}<th>누적</th></tr></thead><tbody>`;
-
   h += `<tr style="background:rgba(0,87,184,0.03)"><td class="row-header" colspan="2">매출액</td><td>${costFmtEok(prevAvg.revenue || yAvg?.revenue)}</td><td>${costFmtEok(tgt.revenue)}</td><td>${costFmtEok(avg(data.revenue))}</td>`;
   h += data.revenue.map((v, i) => { const dim = i >= range ? ' style="opacity:0.25"' : ''; return `<td${dim}>${costFmtEok(v)}</td>`; }).join('');
   h += `<td>${costFmtEok(cumul(data.revenue))}</td></tr>`;
-
   const hazaRows = [
     { key: 'haza_product', label: '제품' },
     { key: 'haza_material', label: '자재' },
     { key: 'haza_claim', label: '클레임 보상' },
   ];
-  const visibleHazaRows = hazaRows.filter(r => {
-    const arr = data[r.key];
-    if (!arr) return false;
-    return arr.some(v => v > 0) || (prevAvg[r.key] && prevAvg[r.key] > 0) || (yAvg && yAvg[r.key] && yAvg[r.key] > 0) || (tgt[r.key] && tgt[r.key] > 0);
-  });
-
+  const visibleHazaRows = hazaRows.filter(r => { const arr = data[r.key]; if (!arr) return false; return arr.some(v => v > 0) || (prevAvg[r.key] && prevAvg[r.key] > 0) || (yAvg && yAvg[r.key] && yAvg[r.key] > 0) || (tgt[r.key] && tgt[r.key] > 0); });
   if (visibleHazaRows.length > 0) {
     h += `<tr><td class="row-header" rowspan="${visibleHazaRows.length + 1}">(판)하자보수비</td><td class="row-header">${visibleHazaRows[0].label}</td><td>${prevAvgFmt(visibleHazaRows[0].key)}</td><td>${tgtFmt(visibleHazaRows[0].key)}</td><td>${yearAvgFmt(data[visibleHazaRows[0].key] || [])}</td>${mc(data[visibleHazaRows[0].key] || [])}<td>${costFmtMan(cumul(data[visibleHazaRows[0].key] || []))}</td></tr>`;
     for (let i = 1; i < visibleHazaRows.length; i++) {
@@ -869,16 +884,13 @@ function renderCostTable(data, year, range, pd, py) {
       h += `<tr><td class="row-header">${r.label}</td><td>${prevAvgFmt(r.key)}</td><td>${tgtFmt(r.key)}</td><td>${yearAvgFmt(data[r.key] || [])}</td>${mc(data[r.key] || [])}<td>${costFmtMan(cumul(data[r.key] || []))}</td></tr>`;
     }
   }
-  h += `<tr style="font-weight:600"><td class="row-header" ${visibleHazaRows.length === 0 ? 'colspan="2"' : ''}>계</td><td>${prevAvgFmt('haza_subtotal')}</td><td>${tgtFmt('haza_subtotal')}</td><td>${yearAvgFmt(computedHazaSub)}</td>${mc(computedHazaSub)}<td>${costFmtMan(cumul(computedHazaSub))}</td></tr>`;
-
+  h += `<tr style="font-weight:600"><td class="row-header" ${visibleHazaRows.length===0?'colspan="2"':''}>계</td><td>${prevAvgFmt('haza_subtotal')}</td><td>${tgtFmt('haza_subtotal')}</td><td>${yearAvgFmt(computedHazaSub)}</td>${mc(computedHazaSub)}<td>${costFmtMan(cumul(computedHazaSub))}</td></tr>`;
   const jeHaza = data.je_haza || Array(12).fill(0);
   h += `<tr style="background:rgba(255,179,71,0.05)"><td class="row-header" colspan="1">(제)하자보수비</td><td class="row-header">폐기</td><td>${prevAvgFmt('je_haza')}</td><td>${tgtFmt('je_haza')}</td><td>${yearAvgFmt(jeHaza)}</td>${mc(jeHaza)}<td>${costFmtMan(cumul(jeHaza))}</td></tr>`;
-
   h += `<tr><td class="row-header" rowspan="4">바로스 AS</td><td class="row-header">AS 컨택센터</td><td>${prevAvgFmt('baros_contact')}</td><td>${tgtFmt('baros_contact')}</td><td>${yearAvgFmt(data.baros_contact)}</td>${mc(data.baros_contact)}<td>${costFmtMan(cumul(data.baros_contact))}</td></tr>`;
   h += `<tr><td class="row-header">AS조치비(무상)</td><td>${prevAvgFmt('baros_as')}</td><td>${tgtFmt('baros_as')}</td><td>${yearAvgFmt(data.baros_as)}</td>${mc(data.baros_as)}<td>${costFmtMan(cumul(data.baros_as))}</td></tr>`;
   h += `<tr><td class="row-header">AS물류비</td><td>${prevAvgFmt('baros_logistics')}</td><td>${tgtFmt('baros_logistics')}</td><td>${yearAvgFmt(data.baros_logistics)}</td>${mc(data.baros_logistics)}<td>${costFmtMan(cumul(data.baros_logistics))}</td></tr>`;
   h += `<tr style="font-weight:600"><td class="row-header">계</td><td>${prevAvgFmt('baros_subtotal')}</td><td>${tgtFmt('baros_subtotal')}</td><td>${yearAvgFmt(data.baros_subtotal)}</td>${mc(data.baros_subtotal)}<td>${costFmtMan(cumul(data.baros_subtotal))}</td></tr>`;
-
   h += `<tr style="font-weight:700;background:rgba(255,107,122,0.04)"><td class="row-header" colspan="2">소계</td>`;
   const prevTotal = (prevAvg.haza_subtotal || 0) + (prevAvg.je_haza || 0) + (prevAvg.baros_subtotal || 0);
   const prevTotalY = yAvg ? ((yAvg.haza_subtotal || 0) + (yAvg.je_haza || 0) + (yAvg.baros_subtotal || 0)) : prevTotal;
@@ -886,7 +898,6 @@ function renderCostTable(data, year, range, pd, py) {
   h += `<td>${costFmtMan(prevTotalY || prevTotal)}</td><td>${costFmtMan(tgtTotal)}</td><td>${yearAvgFmt(total)}</td>`;
   h += total.map((v, i) => { const dim = i >= range ? ' style="opacity:0.25"' : ''; return `<td${dim}>${costFmtMan(v)}</td>`; }).join('');
   h += `<td>${costFmtMan(cumul(total))}</td></tr>`;
-
   h += `<tr style="font-weight:600"><td class="row-header" colspan="2">매출액 대비 비율</td>`;
   const prevRatioVal = prevAvg.revenue ? (((prevTotal) / prevAvg.revenue) * 100).toFixed(2) : '-';
   const prevRatioY = yAvg?.revenue ? ((prevTotalY / yAvg.revenue) * 100).toFixed(2) : prevRatioVal;
@@ -900,203 +911,239 @@ function renderCostTable(data, year, range, pd, py) {
   container.innerHTML = h;
 }
 
-function onCostYearChange(year) {
-  // Set default range based on available data
-  if (year === '2026') _costMonthRange = 2;
-  else if (year === '2025') _costMonthRange = 12;
-  else if (year === '2024') _costMonthRange = 10;
-  const sel = document.getElementById('costMonthRange');
-  if (sel) sel.value = String(_costMonthRange);
-  renderCostSection(year);
+async function onCostYearChange(year) {
+  document.getElementById('costYearSelect').value = year;
+  await renderCostSection(year);
 }
-
-function onCostMonthRangeChange(val) {
+async function onCostMonthRangeChange(val) {
   _costMonthRange = parseInt(val);
   const year = document.getElementById('costYearSelect')?.value || '2026';
-  renderCostSection(year);
+  await renderCostSection(year);
 }
 
-// ============================================================
-// TAB SWITCHING
-// ============================================================
+window.CostModule = { renderCostSection, onCostYearChange, onCostMonthRangeChange, loadFailureCostsFromSupabase, COST_DATA };
+</script>
+
+<script>
+// ======================================================
+// UI 함수들
+// ======================================================
+
 function showKpiTab(tab, btn) {
-  document.querySelectorAll('.kpi-content').forEach(c => c.style.display = 'none');
+  document.querySelectorAll('#section-kpi .kpi-content').forEach(c => c.style.display = 'none');
   document.getElementById('kpi-' + tab).style.display = 'block';
-  document.querySelectorAll('.sub-tab').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('#section-kpi .sub-tab').forEach(t => t.classList.remove('active'));
   btn.classList.add('active');
+  if (tab === 'cost-kpi') buildCostMonthOptions();
+  if (tab === 'claim-kpi') buildMonthOptions();
+}
 
-  // 실패비용 탭 전환 시 렌더링
-  if (tab === 'cost-kpi') {
-    const year = document.getElementById('costYearSelect')?.value || '2026';
-    renderCostSection(year);
+// 분석 월 선택 헬퍼
+function _prevYearMonth(ym) {
+  const [y, m] = ym.split('-').map(Number);
+  return m === 1 ? `${y-1}-12` : `${y}-${String(m-1).padStart(2,'0')}`;
+}
+function _defaultAnalysisRange() {
+  const now = new Date();
+  const cur = _prevYearMonth(`${now.getFullYear()}-${String(now.getMonth()+1).padStart(2,'0')}`);
+  const prev = _prevYearMonth(cur);
+  return { prev, cur };
+}
+
+function buildMonthOptions() {
+  const sel1 = document.getElementById('analysisPrevMonth');
+  const sel2 = document.getElementById('analysisCurMonth');
+  if (!sel1 || !sel2) return;
+  const now = new Date();
+  const months = [];
+  for (let y = 2024; y <= now.getFullYear(); y++) {
+    const maxM = y === now.getFullYear() ? now.getMonth() + 1 : 12;
+    for (let m = 1; m <= maxM; m++) months.push(`${y}-${String(m).padStart(2,'0')}`);
   }
+  months.reverse();
+  sel1.innerHTML = months.map(m => `<option value="${m}">${m}</option>`).join('');
+  sel2.innerHTML = months.map(m => `<option value="${m}">${m}</option>`).join('');
+  const _df = _defaultAnalysisRange();
+  sel1.value = _df.prev;
+  sel2.value = _df.cur;
 }
 
-// ============================================================
-// ACCORDION
-// ============================================================
-function toggleAccordion(el) {
-  const item = el.closest('.accordion-item');
-  item.classList.toggle('open');
+function buildCostMonthOptions() {
+  const sel1 = document.getElementById('costAnalysisPrevMonth');
+  const sel2 = document.getElementById('costAnalysisCurMonth');
+  if (!sel1 || !sel2) return;
+  const now = new Date();
+  const months = [];
+  for (let y = 2024; y <= now.getFullYear(); y++) {
+    const maxM = y === now.getFullYear() ? now.getMonth() + 1 : 12;
+    for (let m = 1; m <= maxM; m++) months.push(`${y}-${String(m).padStart(2,'0')}`);
+  }
+  months.reverse();
+  sel1.innerHTML = months.map(m => `<option value="${m}">${m}</option>`).join('');
+  sel2.innerHTML = months.map(m => `<option value="${m}">${m}</option>`).join('');
+  const _df = _defaultAnalysisRange();
+  sel1.value = _df.prev;
+  sel2.value = _df.cur;
 }
 
-// ============================================================
-// STATIC JSON DATA RENDERING (kpi_export.json 기반)
-// ============================================================
-const KPI_EXPORT = {
-  claims: [
-    {mo:1,category:'고객불만',cnt:190},{mo:1,category:'사양재검토',cnt:165},{mo:1,category:'서비스',cnt:18},{mo:1,category:'설계',cnt:209},{mo:1,category:'제조',cnt:111},
-    {mo:2,category:'고객불만',cnt:145},{mo:2,category:'사양재검토',cnt:157},{mo:2,category:'서비스',cnt:15},{mo:2,category:'설계',cnt:165},{mo:2,category:'제조',cnt:61},
-    {mo:3,category:'고객불만',cnt:173},{mo:3,category:'사양재검토',cnt:175},{mo:3,category:'서비스',cnt:16},{mo:3,category:'설계',cnt:169},{mo:3,category:'제조',cnt:107},
-    {mo:4,category:'고객불만',cnt:178},{mo:4,category:'사양재검토',cnt:281},{mo:4,category:'서비스',cnt:21},{mo:4,category:'설계',cnt:236},{mo:4,category:'제조',cnt:98},
-    {mo:5,category:'고객불만',cnt:152},{mo:5,category:'사양재검토',cnt:202},{mo:5,category:'서비스',cnt:8},{mo:5,category:'설계',cnt:217},{mo:5,category:'제조',cnt:52},
-    {mo:6,category:'고객불만',cnt:136},{mo:6,category:'사양재검토',cnt:258},{mo:6,category:'서비스',cnt:5},{mo:6,category:'설계',cnt:285},{mo:6,category:'제조',cnt:84},
-    {mo:7,category:'고객불만',cnt:131},{mo:7,category:'사양재검토',cnt:258},{mo:7,category:'서비스',cnt:10},{mo:7,category:'설계',cnt:319},{mo:7,category:'제조',cnt:81},
-    {mo:8,category:'고객불만',cnt:57},{mo:8,category:'사양재검토',cnt:90},{mo:8,category:'서비스',cnt:7},{mo:8,category:'설계',cnt:170},{mo:8,category:'제조',cnt:38},
-  ],
-  topItems: [
-    {item:'T50',cnt:1449},{item:'T50AIR',cnt:422},{item:'GC PRO',cnt:364},{item:'T21',cnt:318},{item:'T60',cnt:312},
-    {item:'GX',cnt:304},{item:'T80',cnt:281},{item:'T20',cnt:267},{item:'링고2세대',cnt:240},{item:'T90',cnt:222}
-  ],
-  catTotal: [
-    {category:'설계',cnt:1770},{category:'사양재검토',cnt:1586},{category:'고객불만',cnt:1162},{category:'제조',cnt:632},{category:'서비스',cnt:100}
-  ],
-  latestMonth: [
-    {category:'제조',cnt:81},{category:'서비스',cnt:10},{category:'설계',cnt:319},{category:'사양재검토',cnt:258},{category:'고객불만',cnt:131}
-  ]
+// 자동 분석 — Standalone: 빈 데이터로 동작
+window.runKpiAutoAnalysis = async function() {
+  const curYm = document.getElementById('analysisCurMonth').value;
+  const prevYm = document.getElementById('analysisPrevMonth').value;
+  if (!curYm || !prevYm) return;
+  document.getElementById('kpiAnalysisEmpty').style.display = 'none';
+  document.getElementById('kpiAnalysisResult').style.display = 'none';
+  document.getElementById('kpiAnalysisLoading').style.display = 'block';
+  await new Promise(r => setTimeout(r, 300));
+  document.getElementById('kpiAnalysisLoading').style.display = 'none';
+  document.getElementById('kpiAnalysisResult').style.display = 'block';
+  document.getElementById('kpiAnSummaryCards').innerHTML = `<div style="grid-column:1/-1;text-align:center;padding:20px;color:var(--text-muted);font-size:13px">⚠ Standalone 모드에서는 개별 클레임 레코드를 조회할 수 없습니다.<br>실제 대시보드에서 분석을 실행하세요.</div>`;
+  document.getElementById('kpiAnCategoryTable').innerHTML = '';
+  document.getElementById('kpiAnItemTable').innerHTML = '';
+  document.getElementById('kpiAnPartTable').innerHTML = '';
 };
 
-function renderStaticAnalysis() {
-  // catTotal display
-  const catEl = document.getElementById('catTotalDisplay');
-  if (catEl) {
-    const grandTotal = KPI_EXPORT.catTotal.reduce((s,r)=>s+Number(r.cnt),0);
-    const maxCnt = Math.max(...KPI_EXPORT.catTotal.map(r=>Number(r.cnt)));
-    const colorMap = { '설계':'brand', '사양재검토':'rose', '고객불만':'violet', '제조':'emerald', '서비스':'violet' };
-    let h = '<div class="bar-chart">';
-    KPI_EXPORT.catTotal.forEach(r => {
-      const cnt = Number(r.cnt);
-      const pct = ((cnt/maxCnt)*100).toFixed(1);
-      const ratio = ((cnt/grandTotal)*100).toFixed(1);
-      const cls = colorMap[r.category] || 'brand';
-      h += `<div class="bar-row">
-        <div class="bar-label" style="min-width:80px;font-size:12px;font-weight:600">${r.category}</div>
-        <div class="bar-track">
-          <div class="bar-fill ${cls}" style="width:${pct}%"><span>${cnt.toLocaleString()}건</span></div>
-        </div>
-        <div style="font-size:11px;color:var(--text-muted);font-family:'JetBrains Mono',monospace;min-width:44px;text-align:right">${ratio}%</div>
-      </div>`;
-    });
-    h += `<div style="text-align:right;font-size:11px;color:var(--text-muted);margin-top:8px">누적 합계: <b style="font-family:'JetBrains Mono',monospace">${grandTotal.toLocaleString()}건</b></div>`;
-    h += '</div>';
-    catEl.innerHTML = h;
-  }
+window.runCostAutoAnalysis = async function() {
+  const curYm  = document.getElementById('costAnalysisCurMonth').value;
+  const prevYm = document.getElementById('costAnalysisPrevMonth').value;
+  if (!curYm || !prevYm) return;
+  document.getElementById('costAnalysisEmpty').style.display   = 'none';
+  document.getElementById('costAnalysisResult').style.display  = 'none';
+  document.getElementById('costAnalysisLoading').style.display = 'block';
+  await new Promise(r => setTimeout(r, 200));
+  document.getElementById('costAnalysisLoading').style.display = 'none';
+  document.getElementById('costAnalysisResult').style.display  = 'block';
 
-  // topItems accordion
-  const acc = document.getElementById('topItemsAccordion');
-  if (acc) {
-    const maxCnt = KPI_EXPORT.topItems[0]?.cnt || 1;
-    const catColors = ['brand','rose','emerald','violet','rose','brand','emerald','violet','rose','brand'];
-    let h = '';
-    KPI_EXPORT.topItems.forEach((item, idx) => {
-      const cnt = Number(item.cnt);
-      const pct = ((cnt/Number(maxCnt))*100).toFixed(1);
-      const rankCls = idx===0?'gold':idx===1?'silver':idx===2?'bronze':'normal';
-      // Per-month breakdown (calculate from claims data)
-      const months = [];
-      for (let m=1; m<=8; m++) {
-        const monthTotal = KPI_EXPORT.claims.filter(c=>c.mo===m).reduce((s,c)=>s+Number(c.cnt),0);
-        // Approximate per-product distribution (simplistic: proportional to overall share)
-        months.push({ m, total: monthTotal });
-      }
-      h += `<div class="accordion-item">
-        <div class="accordion-header" onclick="toggleAccordion(this)">
-          <div class="accordion-header-left">
-            <div style="width:28px;height:28px;border-radius:7px;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:12px;flex-shrink:0;${
-              rankCls==='gold'?'background:linear-gradient(135deg,#f59e0b,#fbbf24);color:#1a1a1a':
-              rankCls==='silver'?'background:linear-gradient(135deg,#94a3b8,#cbd5e1);color:#1a1a1a':
-              rankCls==='bronze'?'background:linear-gradient(135deg,#d97706,#b45309);color:#fff':
-              'background:var(--sidiz-card);color:var(--text-muted);border:1px solid var(--border)'}">${idx+1}</div>
-            <div class="accordion-product-name">${item.item}</div>
-            <div class="accordion-product-count ${idx<3?'rose':'blue'}">${cnt.toLocaleString()}</div>
-            <div class="accordion-meta">
-              <div>누적 1~8월</div>
-            </div>
-          </div>
-          <div style="display:flex;align-items:center;gap:12px">
-            <div style="width:80px;height:5px;background:rgba(0,0,0,0.07);border-radius:3px;overflow:hidden">
-              <div style="width:${pct}%;height:100%;border-radius:3px;background:linear-gradient(90deg,var(--sidiz-blue),var(--accent-cyan))"></div>
-            </div>
-            <div style="font-size:11px;color:var(--text-muted);font-family:'JetBrains Mono',monospace">${pct}%</div>
-            <div class="accordion-arrow">▼</div>
-          </div>
-        </div>
-        <div class="accordion-body">
-          <div style="font-size:11px;color:var(--text-muted);margin-bottom:10px">판정유형별 비율 추정 (전체 비례 기준)</div>
-          ${KPI_EXPORT.catTotal.map(ct => {
-            const catPct = ((Number(ct.cnt)/5250)*cnt).toFixed(0);
-            const barPct = ((Number(ct.cnt)/5250)*100).toFixed(1);
-            return `<div class="mini-bar-row">
-              <div class="mini-bar-label">${ct.category}</div>
-              <div class="mini-bar-track">
-                <div class="mini-bar-fill ${catColors[KPI_EXPORT.catTotal.indexOf(ct)]||'brand'}" style="width:${barPct}%">
-                  <span>${Number(catPct).toLocaleString()}건</span>
-                </div>
-              </div>
-            </div>`;
-          }).join('')}
-        </div>
-      </div>`;
-    });
-    acc.innerHTML = h;
+  const year = curYm.slice(0,4);
+  const cd = COST_DATA[year];
+  if (!cd) {
+    document.getElementById('costAnSummaryCards').innerHTML = `<div style="grid-column:1/-1;text-align:center;color:var(--text-muted);font-size:12px">${year}년 실패비용 데이터 없음</div>`;
+    document.getElementById('costAnDetailTable').innerHTML = '';
+    return;
   }
+  const curM  = parseInt(curYm.slice(5))  - 1;
+  const prevM = parseInt(prevYm.slice(5)) - 1;
+  const toW = v => (v && v > 0) ? Math.round(v/10000).toLocaleString() : '-';
+  const curTotal  = ((cd.haza_subtotal||[])[curM]||0)  + ((cd.baros_subtotal||[])[curM]||0)  + ((cd.je_haza||[])[curM]||0);
+  const prevTotal = ((cd.haza_subtotal||[])[prevM]||0) + ((cd.baros_subtotal||[])[prevM]||0) + ((cd.je_haza||[])[prevM]||0);
+  const curRev    = (cd.revenue||[])[curM]||0;
+  const prevRev   = (cd.revenue||[])[prevM]||0;
+  const curRatio  = curRev  > 0 ? ((curTotal/curRev)*100).toFixed(2)   : '-';
+  const prevRatio = prevRev > 0 ? ((prevTotal/prevRev)*100).toFixed(2) : '-';
+  const totalDiff = curTotal - prevTotal;
+  const totalArrow = totalDiff < 0
+    ? `<span style="color:var(--accent-emerald);font-size:12px">▼ ${toW(Math.abs(totalDiff))}만원 감소</span>`
+    : `<span style="color:var(--accent-rose);font-size:12px">▲ ${toW(Math.abs(totalDiff))}만원 증가</span>`;
+  document.getElementById('costAnSummaryCards').innerHTML = `
+    <div style="background:var(--sidiz-dark2);border:1px solid rgba(231,76,60,0.2);border-radius:10px;padding:16px">
+      <div style="font-size:11px;color:var(--text-muted);margin-bottom:6px">💰 당월 실패비용 합계</div>
+      <div style="font-size:22px;font-weight:700;color:var(--accent-rose);font-family:'JetBrains Mono',monospace">${toW(curTotal)}만원</div>
+      <div style="font-size:11px;margin-top:4px">${totalArrow}</div>
+    </div>
+    <div style="background:var(--sidiz-dark2);border:1px solid var(--border);border-radius:10px;padding:16px">
+      <div style="font-size:11px;color:var(--text-muted);margin-bottom:6px">📊 매출 대비 비율</div>
+      <div style="font-size:22px;font-weight:700;color:var(--accent-amber);font-family:'JetBrains Mono',monospace">${curRatio}%</div>
+      <div style="font-size:11px;margin-top:4px;color:var(--text-muted)">전월 ${prevRatio}% · 목표 <b style="color:var(--accent-emerald)">1.09%</b></div>
+    </div>
+    <div style="background:var(--sidiz-dark2);border:1px solid var(--border);border-radius:10px;padding:16px">
+      <div style="font-size:11px;color:var(--text-muted);margin-bottom:6px">📈 매출액</div>
+      <div style="font-size:22px;font-weight:700;color:var(--accent-cyan);font-family:'JetBrains Mono',monospace">${curRev > 0 ? (curRev/100000000).toFixed(1)+'억' : '-'}</div>
+      <div style="font-size:11px;margin-top:4px;color:var(--text-muted)">전월 ${prevRev > 0 ? (prevRev/100000000).toFixed(1)+'억' : '-'}</div>
+    </div>`;
 
-  // latestMonth display (7월)
-  const latestEl = document.getElementById('latestMonthDisplay');
-  if (latestEl) {
-    const latestTotal = KPI_EXPORT.latestMonth.reduce((s,r)=>s+Number(r.cnt),0);
-    const maxCnt2 = Math.max(...KPI_EXPORT.latestMonth.map(r=>Number(r.cnt)));
-    const colorMap2 = { '설계':'brand', '사양재검토':'rose', '고객불만':'violet', '제조':'emerald', '서비스':'violet' };
-    let h = `<div style="font-size:11px;color:var(--text-muted);margin-bottom:10px">2026년 7월 판정 총 ${latestTotal.toLocaleString()}건</div>`;
-    h += '<div class="bar-chart">';
-    const sorted = [...KPI_EXPORT.latestMonth].sort((a,b)=>Number(b.cnt)-Number(a.cnt));
-    sorted.forEach(r => {
-      const cnt = Number(r.cnt);
-      const pct = ((cnt/maxCnt2)*100).toFixed(1);
-      const ratio = ((cnt/latestTotal)*100).toFixed(1);
-      const cls = colorMap2[r.category] || 'brand';
-      h += `<div class="bar-row">
-        <div class="bar-label" style="min-width:80px;font-size:12px;font-weight:600">${r.category}</div>
-        <div class="bar-track">
-          <div class="bar-fill ${cls}" style="width:${pct}%"><span>${cnt.toLocaleString()}건</span></div>
-        </div>
-        <div style="font-size:11px;color:var(--text-muted);font-family:'JetBrains Mono',monospace;min-width:44px;text-align:right">${ratio}%</div>
-      </div>`;
-    });
-    h += '</div>';
-    latestEl.innerHTML = h;
-  }
+  const items = [
+    ['(판)하자보수비 계', cd.haza_subtotal,  true],
+    ['ㄴ 제품비',        cd.haza_product,   false],
+    ['ㄴ 자재비',        cd.haza_material,  false],
+    ['ㄴ 클레임보상',    cd.haza_claim,     false],
+    ['(제)하자보수비',   cd.je_haza,        true],
+    ['바로스 AS 계',     cd.baros_subtotal, true],
+    ['ㄴ AS컨택센터',    cd.baros_contact,  false],
+    ['ㄴ AS조치비(무상)',cd.baros_as,       false],
+    ['ㄴ AS물류비',      cd.baros_logistics,false],
+  ];
+  const rows = items.map(([label, arr, isMain]) => {
+    const p = (arr||[])[prevM]||0, c = (arr||[])[curM]||0;
+    const diff = c - p;
+    const arrow = diff > 0 ? `<span style="color:var(--accent-rose)">▲${toW(Math.abs(diff))}</span>` : diff < 0 ? `<span style="color:var(--accent-emerald)">▼${toW(Math.abs(diff))}</span>` : '<span style="color:var(--text-muted)">━</span>';
+    return `<tr style="${isMain?'border-top:1px solid var(--border)':''}">
+      <td style="padding:6px 10px;font-size:12px;font-weight:${isMain?'600':'400'};color:${isMain?'var(--text-primary)':'var(--text-secondary)'}">${label}</td>
+      <td style="padding:6px 10px;text-align:right;font-size:12px;color:var(--text-muted);font-family:'JetBrains Mono',monospace">${toW(p)}만</td>
+      <td style="padding:6px 10px;text-align:right;font-size:12px;font-family:'JetBrains Mono',monospace;font-weight:${isMain?'600':'400'}">${toW(c)}만</td>
+      <td style="padding:6px 10px;text-align:right;font-size:11px">${arrow}</td>
+    </tr>`;
+  }).join('');
+  document.getElementById('costAnDetailTable').innerHTML = `
+    <table style="width:100%;border-collapse:collapse">
+      <thead><tr style="border-bottom:1px solid var(--border)">
+        <th style="padding:6px 10px;text-align:left;font-size:11px;color:var(--text-muted);font-weight:500">항목</th>
+        <th style="padding:6px 10px;text-align:right;font-size:11px;color:var(--text-muted);font-weight:500">전월 (${prevYm})</th>
+        <th style="padding:6px 10px;text-align:right;font-size:11px;color:var(--text-muted);font-weight:500">당월 (${curYm})</th>
+        <th style="padding:6px 10px;text-align:right;font-size:11px;color:var(--text-muted);font-weight:500">증감</th>
+      </tr></thead>
+      <tbody>${rows}</tbody>
+    </table>`;
+};
+
+// 메모 기능 (로컬 전용)
+window._kpiNoteEntries = { claim: [], cost: [] };
+function _escapeHtml(s) { return String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
+function _renderKpiNoteList(type) {
+  const pfx = type === 'claim' ? 'Claim' : 'Cost';
+  const wrap = document.getElementById(`kpi${pfx}NoteList`);
+  if (!wrap) return;
+  const arr = window._kpiNoteEntries[type] || [];
+  if (!arr.length) { wrap.innerHTML = '<div style="color:var(--text-muted);font-size:11px;padding:12px;text-align:center">등록된 특이사항이 없습니다.</div>'; return; }
+  wrap.innerHTML = arr.map((entry, i) => `
+    <div class="kpi-note-entry" style="display:flex;align-items:flex-start;gap:8px;padding:7px 8px;border-bottom:1px solid rgba(0,0,0,0.05)">
+      <input type="checkbox" data-idx="${i}" class="kpi-note-chk-${type}" style="margin-top:3px;cursor:pointer">
+      <div style="flex:1;font-size:12px;line-height:1.6;color:var(--text-primary);white-space:pre-wrap;word-break:break-word">${_escapeHtml(entry)}</div>
+      <button class="kpi-note-del" onclick="removeKpiNoteEntry('${type}',${i})" style="background:none;border:none;color:#e74c3c;font-size:14px;cursor:pointer;padding:0 4px">×</button>
+    </div>`).join('');
 }
+window.addKpiNoteEntry = function(type) {
+  const pfx = type === 'claim' ? 'Claim' : 'Cost';
+  const input = document.getElementById(`kpi${pfx}NoteInput`);
+  if (!input) return;
+  const v = input.value.trim(); if (!v) return;
+  window._kpiNoteEntries[type] = window._kpiNoteEntries[type] || [];
+  window._kpiNoteEntries[type].push(v);
+  input.value = '';
+  _renderKpiNoteList(type);
+  const statusEl = document.getElementById(`kpi${pfx}NoteSaveStatus`);
+  if (statusEl) { statusEl.style.color='var(--accent-emerald)'; statusEl.textContent='✅ 저장됨 (로컬)'; setTimeout(()=>{statusEl.textContent='';},2000); }
+};
+window.removeKpiNoteEntry = function(type, idx) {
+  const arr = window._kpiNoteEntries[type] || [];
+  arr.splice(idx, 1);
+  _renderKpiNoteList(type);
+};
+window.deleteSelectedKpiNotes = function(type) {
+  const checks = Array.from(document.querySelectorAll(`.kpi-note-chk-${type}:checked`));
+  if (!checks.length) return;
+  const idxs = checks.map(c => parseInt(c.dataset.idx)).sort((a,b)=>b-a);
+  const arr = window._kpiNoteEntries[type] || [];
+  idxs.forEach(i => arr.splice(i,1));
+  _renderKpiNoteList(type);
+};
 
-// ============================================================
-// INITIALIZATION
-// ============================================================
-window.addEventListener('DOMContentLoaded', function() {
-  // KPI claim tab 초기화
-  _kpiMonthRange = 7; // 2026-08-24 기준 전월 = 7월
-  const mrSel = document.getElementById('kpiMonthRange');
-  if (mrSel) mrSel.value = '7';
-
-  renderKpiClaimSection('2026');
-  renderStaticAnalysis();
-
-  // cost tab 셀렉터 초기화 (2026 기본: 2개월 데이터)
-  const costMrSel = document.getElementById('costMonthRange');
-  if (costMrSel) costMrSel.value = '2';
-  _costMonthRange = 2;
-  // cost tab은 클릭 시 렌더링 (성능 최적화)
-  // 미리 렌더링도 가능하지만 탭 전환 시 처리
+// 초기화
+document.addEventListener('DOMContentLoaded', async function() {
+  // KPI 기본 범위 설정 및 렌더링
+  await initKpiSection();
+  // 실패비용 렌더링
+  await renderCostSection('2026');
+  // 월 선택 초기화
+  buildMonthOptions();
+  buildCostMonthOptions();
+  // 실패비용 탭 월 범위 초기 설정
+  const now = new Date();
+  const defRange = Math.max(1, now.getMonth()); // 현재 월 - 1
+  _costMonthRange = defRange > 0 ? defRange : 12;
+  const costRangeSel = document.getElementById('costMonthRange');
+  if (costRangeSel && defRange > 0) costRangeSel.value = String(defRange);
 });
 </script>
+
 </body>
 </html>
