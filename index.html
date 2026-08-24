@@ -307,7 +307,7 @@ body { font-family: 'Noto Sans KR', sans-serif; background: var(--sidiz-dark); c
           </select>
           <select id="costMonthRange" onchange="onCostMonthRangeChange(this.value)" style="background:var(--sidiz-card);border:1px solid var(--border);color:var(--text-primary);padding:6px 12px;border-radius:8px;font-size:13px">
             <option value="12">전체 (1~12월)</option>
-            <option value="1">~1월</option><option value="2">~2월</option><option value="3">~3월</option>
+            <option value="1">~1월</option><option value="2" selected>~2월</option><option value="3">~3월</option>
             <option value="4">~4월</option><option value="5">~5월</option><option value="6">~6월</option>
             <option value="7">~7월</option><option value="8">~8월</option><option value="9">~9월</option>
             <option value="10">~10월</option><option value="11">~11월</option>
@@ -1090,6 +1090,10 @@ window.addEventListener('DOMContentLoaded', function() {
   renderKpiClaimSection('2026');
   renderStaticAnalysis();
 
+  // cost tab 셀렉터 초기화 (2026 기본: 2개월 데이터)
+  const costMrSel = document.getElementById('costMonthRange');
+  if (costMrSel) costMrSel.value = '2';
+  _costMonthRange = 2;
   // cost tab은 클릭 시 렌더링 (성능 최적화)
   // 미리 렌더링도 가능하지만 탭 전환 시 처리
 });
