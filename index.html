@@ -206,7 +206,7 @@ body {
         </div>
       </div>
       <div id="kpiAnalysisEmpty" style="padding:28px;text-align:center;color:var(--text-muted);font-size:13px">
-        월을 선택하고 <b>분석 생성</b> 버튼을 클릭하면 자동으로 분석됩니다. (※ Standalone 모드: 집계 데이터 없음)
+        월을 선택하고 <b>분석 생성</b> 버튼을 클릭하면 자동으로 분석됩니다.
       </div>
       <div id="kpiAnalysisLoading" style="display:none;padding:28px;text-align:center;color:var(--accent-cyan);font-size:13px">⏳ 데이터 불러오는 중...</div>
       <div id="kpiAnalysisResult" style="display:none;padding:20px">
@@ -379,12 +379,12 @@ const KPI_DATA = {
       vn:  [16124, 17593, 13264, 0, 0, 0, 0, 0, 0, 0, 0, 0],
     },
     judgement: {
-      kr:  [394, 335, 257, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-      vn:  [299, 208, 204, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+      kr:  [394, 335, 365, 464, 361, 438, 456, 206, 0, 0, 0, 0],
+      vn:  [299, 208, 275, 350, 270, 330, 343, 156, 0, 0, 0, 0],
     },
     claims: {
-      kr:  [394, 335, 257, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-      vn:  [299, 208, 204, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+      kr:  [394, 335, 365, 464, 361, 438, 456, 206, 0, 0, 0, 0],
+      vn:  [299, 208, 275, 350, 270, 330, 343, 156, 0, 0, 0, 0],
     },
     detail_kr: {
       '제조':      [36,  29,  32, 0, 0, 0, 0, 0, 0, 0, 0, 0],
@@ -399,6 +399,14 @@ const KPI_DATA = {
       '서비스':    [12,  8,   5,  0, 0, 0, 0, 0, 0, 0, 0, 0],
       '고객불만':  [78,  61,  53, 0, 0, 0, 0, 0, 0, 0, 0, 0],
       '사양재검토':[78,  60,  67, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    },
+    // 4~8월 판정유형별 합계(국내+베트남) — 6·7월만 실측
+    detail_combined: {
+      '제조':      [0, 0, 0, 0, 0,  84,  81, 0, 0, 0, 0, 0],
+      '설계':      [0, 0, 0, 0, 0, 285, 319, 0, 0, 0, 0, 0],
+      '서비스':    [0, 0, 0, 0, 0,   5,  10, 0, 0, 0, 0, 0],
+      '사양재검토':[0, 0, 0, 0, 0, 258, 258, 0, 0, 0, 0, 0],
+      '고객불만':  [0, 0, 0, 0, 0, 136, 131, 0, 0, 0, 0, 0],
     },
     prevYearAvg: { claims_kr: 434, claims_vn: 273 },
     target: 0.015,
@@ -986,7 +994,7 @@ function buildCostMonthOptions() {
   sel2.value = _df.cur;
 }
 
-// 자동 분석 — Standalone: 빈 데이터로 동작
+// 자동 분석 — KPI_DATA 기반 계산
 window.runKpiAutoAnalysis = async function() {
   const curYm = document.getElementById('analysisCurMonth').value;
   const prevYm = document.getElementById('analysisPrevMonth').value;
@@ -997,10 +1005,91 @@ window.runKpiAutoAnalysis = async function() {
   await new Promise(r => setTimeout(r, 300));
   document.getElementById('kpiAnalysisLoading').style.display = 'none';
   document.getElementById('kpiAnalysisResult').style.display = 'block';
-  document.getElementById('kpiAnSummaryCards').innerHTML = `<div style="grid-column:1/-1;text-align:center;padding:20px;color:var(--text-muted);font-size:13px">⚠ Standalone 모드에서는 개별 클레임 레코드를 조회할 수 없습니다.<br>실제 대시보드에서 분석을 실행하세요.</div>`;
-  document.getElementById('kpiAnCategoryTable').innerHTML = '';
-  document.getElementById('kpiAnItemTable').innerHTML = '';
-  document.getElementById('kpiAnPartTable').innerHTML = '';
+
+  const curY = curYm.slice(0,4), curM = parseInt(curYm.slice(5)) - 1;
+  const prevY = prevYm.slice(0,4), prevM = parseInt(prevYm.slice(5)) - 1;
+  const cd = KPI_DATA[curY], pd = KPI_DATA[prevY];
+
+  if (!cd || !pd) {
+    document.getElementById('kpiAnSummaryCards').innerHTML = `<div style="grid-column:1/-1;text-align:center;padding:20px;color:var(--text-muted);font-size:13px">해당 연도 데이터 없음</div>`;
+    document.getElementById('kpiAnCategoryTable').innerHTML = '';
+    document.getElementById('kpiAnItemTable').innerHTML = '';
+    document.getElementById('kpiAnPartTable').innerHTML = '';
+    return;
+  }
+
+  const curKr = cd.judgement.kr[curM] || 0;
+  const curVn = cd.judgement.vn[curM] || 0;
+  const curTotal = curKr + curVn;
+  const prevKr = pd.judgement.kr[prevM] || 0;
+  const prevVn = pd.judgement.vn[prevM] || 0;
+  const prevTotal = prevKr + prevVn;
+
+  const diffTotal = curTotal - prevTotal;
+  const diffKr    = curKr - prevKr;
+  const diffVn    = curVn - prevVn;
+  const pct = (diff, base) => base > 0 ? ((diff / base) * 100).toFixed(1) + '%' : '-';
+  const arrowColor = v => v > 0 ? 'var(--accent-rose)' : v < 0 ? 'var(--accent-emerald)' : 'var(--text-muted)';
+  const arrowMark  = v => v > 0 ? '▲' : v < 0 ? '▼' : '─';
+
+  const makeCard = (label, cur, prev, diff) => `
+    <div style="background:var(--sidiz-dark2);border:1px solid var(--border);border-radius:10px;padding:16px">
+      <div style="font-size:11px;color:var(--text-muted);margin-bottom:6px">${label}</div>
+      <div style="font-size:24px;font-weight:700;color:var(--sidiz-blue-bright);font-family:'JetBrains Mono',monospace">${cur.toLocaleString()}건</div>
+      <div style="font-size:12px;margin-top:4px;color:${arrowColor(diff)}">${arrowMark(diff)} ${Math.abs(diff).toLocaleString()}건 (${pct(diff, prev)}) <span style="color:var(--text-muted)">전월 ${prev.toLocaleString()}건</span></div>
+    </div>`;
+
+  document.getElementById('kpiAnSummaryCards').innerHTML =
+    makeCard('📊 클레임 건수 (전체)', curTotal, prevTotal, diffTotal) +
+    makeCard('🇰🇷 국내', curKr, prevKr, diffKr) +
+    makeCard('🇻🇳 베트남', curVn, prevVn, diffVn);
+
+  // 판정유형별 — detail_kr+detail_vn 우선, 없으면 detail_combined 사용
+  const CATS = ['제조', '설계', '서비스', '사양재검토', '고객불만'];
+  const getCat = (data, month, cat) => {
+    const kr = (data.detail_kr?.[cat]?.[month] || 0);
+    const vn = (data.detail_vn?.[cat]?.[month] || 0);
+    if (kr + vn > 0) return kr + vn;
+    return data.detail_combined?.[cat]?.[month] || 0;
+  };
+  const catRows = CATS.map(cat => ({
+    cat,
+    cur:  getCat(cd, curM,  cat),
+    prev: getCat(pd, prevM, cat),
+  }));
+  const hasData = catRows.some(r => r.cur > 0 || r.prev > 0);
+  if (!hasData) {
+    document.getElementById('kpiAnCategoryTable').innerHTML =
+      `<div style="text-align:center;padding:12px;color:var(--text-muted);font-size:12px">해당 월의 판정유형별 상세 데이터 없음</div>`;
+  } else {
+    let t = `<table style="width:100%;border-collapse:collapse;font-size:12px">
+      <thead><tr style="border-bottom:1px solid var(--border)">
+        <th style="text-align:left;padding:6px 10px;color:var(--text-muted);font-weight:600">판정유형</th>
+        <th style="text-align:center;padding:6px 10px;color:var(--text-muted);font-weight:600">전월</th>
+        <th style="text-align:center;padding:6px 10px;color:var(--text-muted);font-weight:600">당월</th>
+        <th style="text-align:center;padding:6px 10px;color:var(--text-muted);font-weight:600">증감</th>
+      </tr></thead><tbody>`;
+    catRows.forEach(r => {
+      const diff = r.cur - r.prev;
+      const hasBoth = r.cur > 0 && r.prev > 0;
+      const diffStr = !hasBoth ? '-'
+        : diff === 0 ? '─'
+        : `<span style="color:${arrowColor(diff)}">${arrowMark(diff)} ${Math.abs(diff)}</span>`;
+      t += `<tr style="border-bottom:1px solid var(--border)">
+        <td style="padding:7px 10px;font-weight:500">${r.cat}</td>
+        <td style="text-align:center;padding:7px 10px;font-family:'JetBrains Mono',monospace">${r.prev > 0 ? r.prev : '-'}</td>
+        <td style="text-align:center;padding:7px 10px;font-family:'JetBrains Mono',monospace">${r.cur > 0 ? r.cur : '-'}</td>
+        <td style="text-align:center;padding:7px 10px">${diffStr}</td>
+      </tr>`;
+    });
+    t += `</tbody></table>`;
+    document.getElementById('kpiAnCategoryTable').innerHTML = t;
+  }
+
+  document.getElementById('kpiAnItemTable').innerHTML =
+    `<div style="text-align:center;padding:12px;color:var(--text-muted);font-size:12px">제품별 상세 데이터는 실제 대시보드에서 확인하세요.</div>`;
+  document.getElementById('kpiAnPartTable').innerHTML =
+    `<div style="text-align:center;padding:12px;color:var(--text-muted);font-size:12px">부위별 상세 데이터는 실제 대시보드에서 확인하세요.</div>`;
 };
 
 window.runCostAutoAnalysis = async function() {
