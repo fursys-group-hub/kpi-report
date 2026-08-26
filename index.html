@@ -1236,6 +1236,8 @@ document.addEventListener('DOMContentLoaded', async function() {
   buildCostMonthOptions();
   // 전월대비 자동 분석 자동 실행
   runKpiAutoAnalysis();
+  // 실패비용 분석 자동 실행
+  runCostAutoAnalysis();
   // 실패비용 탭 월 범위 초기 설정
   const now = new Date();
   const defRange = Math.max(1, now.getMonth()); // 현재 월 - 1
