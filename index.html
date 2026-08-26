@@ -206,7 +206,7 @@ body {
         </div>
       </div>
       <div id="kpiAnalysisEmpty" style="padding:28px;text-align:center;color:var(--text-muted);font-size:13px">
-        월을 선택하고 <b>분석 생성</b> 버튼을 클릭하면 자동으로 분석됩니다.
+        분석 데이터를 불러오는 중입니다...
       </div>
       <div id="kpiAnalysisLoading" style="display:none;padding:28px;text-align:center;color:var(--accent-cyan);font-size:13px">⏳ 데이터 불러오는 중...</div>
       <div id="kpiAnalysisResult" style="display:none;padding:20px">
@@ -1086,10 +1086,18 @@ window.runKpiAutoAnalysis = async function() {
     document.getElementById('kpiAnCategoryTable').innerHTML = t;
   }
 
+  const _savedItem = localStorage.getItem('kpiAnItemData') || '';
   document.getElementById('kpiAnItemTable').innerHTML =
-    `<div style="text-align:center;padding:12px;color:var(--text-muted);font-size:12px">제품별 상세 데이터는 실제 대시보드에서 확인하세요.</div>`;
+    `<div><div style="font-size:11px;color:var(--text-muted);margin-bottom:5px">📋 대시보드 데이터를 복사해 붙여넣으세요 (새로고침 후에도 유지됩니다)</div>
+    <textarea style="width:100%;height:110px;background:var(--sidiz-dark);border:1px solid var(--border);border-radius:6px;color:var(--text-primary);font-size:11px;padding:8px;resize:vertical;font-family:'JetBrains Mono',monospace;box-sizing:border-box"
+      placeholder="제품별 Top 5 데이터를 여기에 붙여넣으세요..."
+      oninput="localStorage.setItem('kpiAnItemData',this.value)">${_savedItem}</textarea></div>`;
+  const _savedPart = localStorage.getItem('kpiAnPartData') || '';
   document.getElementById('kpiAnPartTable').innerHTML =
-    `<div style="text-align:center;padding:12px;color:var(--text-muted);font-size:12px">부위별 상세 데이터는 실제 대시보드에서 확인하세요.</div>`;
+    `<div><div style="font-size:11px;color:var(--text-muted);margin-bottom:5px">📋 대시보드 데이터를 복사해 붙여넣으세요 (새로고침 후에도 유지됩니다)</div>
+    <textarea style="width:100%;height:110px;background:var(--sidiz-dark);border:1px solid var(--border);border-radius:6px;color:var(--text-primary);font-size:11px;padding:8px;resize:vertical;font-family:'JetBrains Mono',monospace;box-sizing:border-box"
+      placeholder="전월대비 증감 TOP 5 데이터를 여기에 붙여넣으세요..."
+      oninput="localStorage.setItem('kpiAnPartData',this.value)">${_savedPart}</textarea></div>`;
 };
 
 window.runCostAutoAnalysis = async function() {
@@ -1225,6 +1233,8 @@ document.addEventListener('DOMContentLoaded', async function() {
   // 월 선택 초기화
   buildMonthOptions();
   buildCostMonthOptions();
+  // 전월대비 자동 분석 자동 실행
+  runKpiAutoAnalysis();
   // 실패비용 탭 월 범위 초기 설정
   const now = new Date();
   const defRange = Math.max(1, now.getMonth()); // 현재 월 - 1
