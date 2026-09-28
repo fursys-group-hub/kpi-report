@@ -1,0 +1,44 @@
+name: KPI 자동 업데이트
+
+on:
+  # 매월 둘째 주 월요일 오전 9시 (KST = UTC+9 → UTC 0시)
+  schedule:
+    - cron: '0 0 8-14 * 1'
+  # 수동 실행 (테스트용)
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  update-kpi:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 저장소 체크아웃
+        uses: actions/checkout@v4
+
+      - name: Node.js 설정
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: pg 패키지 설치
+        run: npm install pg
+
+      - name: KPI 데이터 업데이트
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+        run: node update-kpi.js
+
+      - name: 변경사항 커밋 및 푸시
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email 'github-actions[bot]@users.noreply.github.com'
+          git add index.html
+          if git diff --staged --quiet; then
+            echo "변경사항 없음 — 스킵"
+          else
+            MONTH=$(date -d "last month" +'%Y년 %m월' 2>/dev/null || date -v-1m +'%Y년 %m월')
+            git commit -m "auto: ${MONTH} KPI 데이터 자동 업데이트 (DB 실측)"
+            git push
+          fi
