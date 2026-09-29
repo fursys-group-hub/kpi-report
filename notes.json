@@ -1,1 +1,9 @@
-{}
+{
+  "kpiSpecialNote": "<div><b>[설계]</b></div><div>1. T50, 헤드레스트 각도 조절 불가(변경전 사양) 74건→42건<b><span style=\"background-color: rgb(144, 202, 249);\">(32건 감소)</span></b></div><div>2. 뮤브, 높낮이 작동 불가(오픈크로스핀 저압 변경전) 33건 → 12건<b><span style=\"background-color: rgb(144, 202, 249);\">(21건 감소)</span></b></div><div><b>[사양재검토]</b></div><div>3. T90, 소음 건 감소 16건 → 9건(좌판 골격 소음 / 좌판 유격 소음 / 중심봉 소음)<b><span style=\"background-color: rgb(144, 202, 249);\">(7건 감소)</span></b></div><div>4. T60, 틸팅시 소음 암 커버 알후레임 마찰음 7건 → 2건<b><span style=\"background-color: rgb(144, 202, 249);\">(5건 감소)</span></b></div><div><b>[고객불만]</b></div><div>5. 아이블, 단순변심 환불 3건 → 8건<b><span style=\"background-color: rgb(255, 171, 145);\">(5건 증가)</span></b>_리라이프 진행</div><div>6. 아이블, 등판 메쉬 찢어짐 2건 → 4건<b><span style=\"background-color: rgb(255, 171, 145);\">(2건 증가)</span></b></div><div><b>[제조]</b></div><div>7. T50 2세대, 포장 순서 오류로 인한 불량 1건 → 7건(박스가루 이염/좌판눌림)<b><span style=\"background-color: rgb(255, 171, 145);\">(6건 증가)</span></b></div>",
+  "costSpecialNote": "",
+  "memo": {
+    "claim": [],
+    "cost": []
+  },
+  "updatedAt": "2026-09-29T07:16:23.820051Z"
+}
