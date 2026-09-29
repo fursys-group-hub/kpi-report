@@ -136,6 +136,23 @@ async function main() {
       salesKr, salesVn, totalKr, totalVn, kr, vn
     });
 
+    // ── 제품별 클레임 건수 (전월대비 제품별 증감용) ─────────
+    const prodRes = await client.query(`
+      SELECT COALESCE(NULLIF(TRIM(item), ''), '(미분류)') AS item, COUNT(*)::int AS cnt
+      FROM app_260724_z9e5.claims
+      WHERE claim_date >= $1 AND claim_date < $2
+        AND brand = '시디즈'
+        AND category IN ('제조','설계','서비스','고객불만','사양재검토')
+      GROUP BY 1 ORDER BY 2 DESC
+    `, [
+      `${year}-${String(month).padStart(2,'0')}-01`,
+      month === 12 ? `${year+1}-01-01` : `${year}-${String(month+1).padStart(2,'0')}-01`
+    ]);
+    const prod = {};
+    for (const r of prodRes.rows) prod[r.item] = r.cnt;
+    html = patchProductMonthly(html, ym, prod);
+    console.log(`제품별 ${prodRes.rows.length}개 제품 반영`);
+
     fs.writeFileSync(htmlPath, html, 'utf8');
     console.log(`✅ index.html 업데이트 완료 — ${ym}`);
 
@@ -143,6 +160,20 @@ async function main() {
     client.release();
     await pool.end();
   }
+}
+
+// PRODUCT_MONTHLY 블록(@@PRODUCT_MONTHLY_START ~ END) 안의 해당 월 한 줄을 교체/추가
+function patchProductMonthly(html, ym, prod) {
+  const start = html.indexOf('// @@PRODUCT_MONTHLY_START'), end = html.indexOf('// @@PRODUCT_MONTHLY_END');
+  if (start < 0 || end < 0) { console.log('⚠️ PRODUCT_MONTHLY 블록 없음 — 제품별 갱신 건너뜀'); return html; }
+  const block = html.slice(start, end);
+  const lines = block.split('\n').filter(l => !l.trimStart().startsWith(`'${ym}':`));
+  const entries = lines.filter(l => /^\s+'\d{4}-\d{2}':/.test(l));
+  entries.push(`  '${ym}': ${JSON.stringify(prod)},`);
+  entries.sort();
+  const head = lines.slice(0, 2).join('\n');   // 주석 + "const PRODUCT_MONTHLY = {"
+  const nb = `${head}\n${entries.join('\n')}\n};\n`;
+  return html.slice(0, start) + nb + html.slice(end);
 }
 
 function patchAllArrays(html, idx, data) {

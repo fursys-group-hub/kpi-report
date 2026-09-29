@@ -122,6 +122,8 @@ body {
   .kpi-grid { grid-template-columns: repeat(2, 1fr); }
   .cost-grid { grid-template-columns: repeat(3, 1fr); }
 }
+.kpi-mom-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 20px; align-items: start; }
+@media (max-width: 900px) { .kpi-mom-grid { grid-template-columns: 1fr; } }
 </style>
 </head>
 <body>
@@ -217,7 +219,10 @@ body {
         </div>
         <div style="background:var(--sidiz-dark2);border:1px solid var(--border);border-radius:10px;padding:16px;margin-bottom:16px">
           <div style="font-size:12px;font-weight:600;color:var(--text-secondary);margin-bottom:12px">📝 전월대비 특이사항</div>
-          <div id="kpiAnItemTable"></div>
+          <div class="kpi-mom-grid">
+            <div id="kpiAnProductTable" style="min-width:0"></div>
+            <div id="kpiAnItemTable" style="min-width:0"></div>
+          </div>
           <div id="kpiAnPartTable" style="display:none"></div>
         </div>
         <!-- 특이사항 메모 -->
@@ -425,6 +430,18 @@ const KPI_DATA = {
 };
 
 const MONTHS = ['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'];
+// @@PRODUCT_MONTHLY_START — 제품별 월 클레임 건수 (시디즈·회수일·판정유형 5종, update-kpi.js 가 매월 자동 갱신)
+const PRODUCT_MONTHLY = {
+  '2026-01': {"T50":199,"링고2세대":76,"T50AIR":53,"GC PRO":45,"T80":43,"T60":41,"T21":41,"T20":39,"GX":25,"T90":25,"아이블":23,"T50LIGHT":20,"리니에":9,"트레보":8,"링고":6,"T40":6,"(미분류)":5,"몰티":4,"마네(인조가죽)":3,"아이블(높이조절형/캐스터)":3,"버튼":3,"에가":2,"바스툴":2,"아띠 책상":2,"T55":2,"아띠":2,"아이블(높이조절형)":2,"스테포":1,"셀리오스":1,"T30":1,"마네(플라스틱)":1},
+  '2026-02': {"T50":139,"T50AIR":48,"링고2세대":47,"T60":38,"GC PRO":37,"T20":33,"T80":25,"T90":24,"리니에":22,"T21":22,"GX":21,"T50LIGHT":19,"아이블":16,"트레보":12,"아이블(높이조절형/캐스터)":7,"링고":6,"T40":4,"마네(플라스틱)":4,"마네(인조가죽)":3,"버튼(LEGS형)":2,"뮤브":2,"몰티":2,"프로나드":2,"T55":2,"스테포":1,"아이블(높이조절형)":1,"펑거스":1,"아띠":1,"TN25":1,"아띠 책상":1},
+  '2026-03': {"T50":149,"T60":65,"T21":65,"GC PRO":39,"T50AIR":39,"T20":37,"링고2세대":37,"트레보":28,"T80":26,"T90":25,"아이블":23,"GX":22,"T50LIGHT":16,"(미분류)":16,"아이블(높이조절형/캐스터)":10,"리니에":8,"스테포":8,"T40":6,"T55":5,"링고":3,"몰티":3,"뮤브":3,"T60 AIR":1,"바스툴":1,"필로":1,"이지리페어":1,"플릿":1,"아띠":1,"에가":1},
+  '2026-04': {"T50":221,"T60":74,"T21":66,"T50AIR":62,"T80":55,"GC PRO":48,"T20":43,"GX":32,"링고2세대":31,"T90":26,"아이블":25,"T50LIGHT":23,"트레보":19,"리니에":19,"T40":13,"아이블(높이조절형/캐스터)":8,"뮤브":7,"에가":7,"T55":5,"링고":4,"(미분류)":4,"아띠 책상":4,"스테포":4,"이지리페어":3,"마네(플라스틱)":2,"플릿":2,"버튼":2,"몰티":2,"아띠":1,"셀리오스":1,"아이블(높이조절형/글라이드)":1},
+  '2026-05': {"T50":184,"T21":56,"T50AIR":56,"T60":53,"GC PRO":44,"GX":40,"T80":39,"T20":29,"T90":23,"T50LIGHT":22,"링고2세대":14,"리니에":9,"아이블(높이조절형/캐스터)":9,"아이블":9,"트레보":8,"T40":6,"플릿":6,"뮤브":6,"에가":4,"T55":3,"몰티":2,"아띠":2,"버튼":2,"버튼(LEGS형)":1,"아띠 책상":1,"링고":1,"마네(플라스틱)":1,"필로":1},
+  '2026-06': {"T50":200,"T50AIR":68,"GC PRO":63,"T60":60,"GX":55,"T80":43,"T90":41,"T20":35,"T21":33,"뮤브":30,"T50LIGHT":27,"리니에":17,"링고2세대":16,"아이블":14,"플릿":11,"트레보":10,"아띠 책상":7,"아이블(높이조절형/캐스터)":6,"T40":5,"T55":4,"에가":3,"T60 AIR":3,"스테포":3,"이지리페어":3,"아띠":3,"링고":2,"아이블(높이조절형/글라이드)":2,"마네(인조가죽)":2,"몰티":1,"옷걸이":1},
+  '2026-07': {"T50":249,"GX":69,"T50AIR":61,"GC PRO":60,"T60":47,"T90":45,"T80":43,"T20":37,"뮤브":34,"T21":22,"T50LIGHT":18,"아이블":17,"리니에":15,"링고2세대":12,"T50 2세대":10,"아이블(높이조절형/캐스터)":9,"플릿":7,"T55":7,"아띠 책상":6,"T40":6,"T50AIR 2세대":5,"버튼":4,"링고":3,"몰티":3,"에가":2,"트레보":2,"마네(인조가죽)":1,"프로나드":1,"T60 AIR":1,"펑거스":1,"마네(플라스틱)":1,"(미분류)":1},
+  '2026-08': {"T50":196,"GX":65,"T50AIR":63,"GC PRO":51,"T20":28,"T60":28,"T80":26,"T50LIGHT":25,"아이블":24,"T90":22,"T50 2세대":18,"T21":18,"T50AIR 2세대":17,"뮤브":14,"링고2세대":13,"아이블(높이조절형/캐스터)":12,"리니에":10,"T40":9,"T55":3,"링고":3,"바스툴":3,"트레보":2,"아띠":2,"버튼(LEGS형)":1,"리플라이":1,"필로":1,"플릿":1,"아이블(높이조절형/글라이드)":1,"T30":1,"아띠 책상":1,"몰티":1,"마네(플라스틱)":1,"에가":1,"(미분류)":1},
+};
+// @@PRODUCT_MONTHLY_END
 let _kpiComboChart = null;
 let _kpiMonthRange = 12;
 let _kpiBrandFilter = 'all';
@@ -1097,9 +1114,39 @@ window.runKpiAutoAnalysis = async function() {
     document.getElementById('kpiAnCategoryTable').innerHTML = t;
   }
 
+  // ① 제품별 증감 (전월 → 당월) — PRODUCT_MONTHLY 기반, 증감 3건 이상
+  const pCur = (typeof PRODUCT_MONTHLY !== 'undefined' && PRODUCT_MONTHLY[curYm]) || null;
+  const pPrev = (typeof PRODUCT_MONTHLY !== 'undefined' && PRODUCT_MONTHLY[prevYm]) || null;
+  const mL = ym => parseInt(ym.slice(5)) + '월';
+  let pHtml = `<div style="font-size:12px;font-weight:700;color:var(--text-primary);margin-bottom:4px">제품별 증감 (${mL(prevYm)} → ${mL(curYm)})</div>
+    <div style="font-size:10.5px;color:var(--text-muted);margin-bottom:8px">증감폭 3건 이상 · <span style="color:var(--sidiz-blue)">파랑 = 감소</span>, <span style="color:#E0303F">빨강 = 증가</span></div>`;
+  if (!pCur || !pPrev) {
+    pHtml += `<div style="text-align:center;padding:16px;color:var(--text-muted);font-size:12px">해당 월의 제품별 데이터 없음</div>`;
+  } else {
+    const items = [...new Set([...Object.keys(pPrev), ...Object.keys(pCur)])]
+      .map(k => ({ k, a: pPrev[k] || 0, b: pCur[k] || 0 })).map(o => ({ ...o, d: o.b - o.a }))
+      .filter(o => Math.abs(o.d) >= 3).sort((x, y) => x.d - y.d);
+    const mx = Math.max(1, ...items.map(o => Math.abs(o.d)));
+    const th = 'padding:6px 8px;color:var(--text-muted);font-weight:600;font-size:11px;border-bottom:1px solid var(--border);background:var(--sidiz-dark)';
+    const td = 'padding:5px 8px;border-bottom:1px solid var(--border);font-family:\'JetBrains Mono\',monospace;text-align:right';
+    pHtml += `<div style="overflow-x:auto"><table style="width:100%;border-collapse:collapse;font-size:12px">
+      <thead><tr><th style="${th};text-align:left">제품</th><th style="${th};text-align:right">${mL(prevYm)}</th><th style="${th};text-align:right">${mL(curYm)}</th><th style="${th};text-align:right">증감</th><th style="${th};text-align:left">감소 ← | → 증가</th></tr></thead><tbody>` +
+      (items.map(o => `<tr>
+        <td style="${td};text-align:left;font-family:inherit">${o.k}</td><td style="${td}">${o.a}</td><td style="${td}">${o.b}</td>
+        <td style="${td};font-weight:700;color:${o.d < 0 ? 'var(--sidiz-blue)' : '#E0303F'}">${o.d > 0 ? '+' : '−'}${Math.abs(o.d)}</td>
+        <td style="padding:5px 8px;border-bottom:1px solid var(--border)"><div style="display:grid;grid-template-columns:1fr 1fr;width:150px;height:11px">
+          <div style="display:flex;justify-content:flex-end;border-right:1px solid var(--text-muted)">${o.d < 0 ? `<span style="width:${-o.d / mx * 100}%;background:var(--sidiz-blue);border-radius:2px 0 0 2px"></span>` : ''}</div>
+          <div>${o.d > 0 ? `<span style="display:block;height:100%;width:${o.d / mx * 100}%;background:#E0303F;border-radius:0 2px 2px 0"></span>` : ''}</div>
+        </div></td></tr>`).join('') || `<tr><td colspan="5" style="padding:12px;text-align:center;color:var(--text-muted)">3건 이상 변동한 제품이 없습니다.</td></tr>`) +
+      `</tbody></table></div>`;
+  }
+  document.getElementById('kpiAnProductTable').innerHTML = pHtml;
+
+  // ② 전월대비 특이사항 작성란
   const _savedNote = localStorage.getItem('kpiSpecialNote') || '';
   document.getElementById('kpiAnItemTable').innerHTML =
-    `<div>
+    `<div style="font-size:12px;font-weight:700;color:var(--text-primary);margin-bottom:8px">제품별 증감 상세 · 특이사항</div>
+    <div>
       <div style="display:flex;gap:5px;margin-bottom:8px;flex-wrap:wrap;align-items:center">
         <button onmousedown="event.preventDefault();document.execCommand('bold')" title="굵게 (Ctrl+B)" style="font-weight:700;padding:2px 9px;border-radius:4px;border:1px solid var(--border);background:var(--sidiz-dark);color:var(--text-primary);cursor:pointer;font-size:13px;line-height:1.6">B</button>
         <button onmousedown="event.preventDefault();document.execCommand('backColor',false,'#FFF176')" title="노란색 강조" style="padding:2px 9px;border-radius:4px;border:1px solid #bbb;background:#FFF176;color:#222;cursor:pointer;font-size:11px;font-weight:700">노</button>
@@ -1109,7 +1156,7 @@ window.runKpiAutoAnalysis = async function() {
         <button onmousedown="event.preventDefault();document.execCommand('removeFormat')" title="서식 제거" style="padding:2px 8px;border-radius:4px;border:1px solid var(--border);background:var(--sidiz-dark);color:var(--text-muted);cursor:pointer;font-size:11px">✕ 서식제거</button>
       </div>
       <div id="_kpiNoteEditor" contenteditable="true"
-        style="min-height:130px;background:var(--sidiz-dark);border:1px solid var(--border);border-radius:6px;color:var(--text-primary);font-size:12px;padding:10px;outline:none;font-family:'Noto Sans KR',sans-serif;line-height:1.8;word-break:break-all"
+        style="min-height:420px;background:var(--sidiz-dark);border:1px solid var(--border);border-radius:6px;color:var(--text-primary);font-size:12px;padding:10px;outline:none;font-family:'Noto Sans KR',sans-serif;line-height:1.8;word-break:break-all"
         oninput="localStorage.setItem('kpiSpecialNote',this.innerHTML)"
       >${_savedNote}</div>
       <div style="font-size:10px;color:var(--text-muted);margin-top:5px">텍스트 선택 후 위 버튼으로 굵게·색상 강조 적용 가능 · 새로고침 후에도 내용이 유지됩니다</div>
