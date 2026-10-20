@@ -6,6 +6,9 @@
   const EDITORS = { kpiSpecialNote: '_kpiNoteEditor', costSpecialNote: '_costNoteEditor' };
   let remote = null;          // 마지막으로 불러온 notes.json
   let dirty = false;
+  let ver = 0;                // 편집할 때마다 +1 (저장 중 추가 편집 감지)
+  let timer = null, saving = false, lastSaveAt = 0;
+  const AUTO_IDLE_MS = 5000, AUTO_MIN_GAP_MS = 60000;   // 작성 멈춘 뒤 5초, 저장 간격 최소 1분
 
   const ls = {
     get(k) { try { return localStorage.getItem(k); } catch (e) { return null; } },
@@ -23,7 +26,7 @@
     <button id="snCfg" class="sn-btn" type="button" title="저장용 GitHub 토큰 설정">⚙</button>
     <div id="snPanel" class="sn-panel" hidden>
       <div class="sn-ptitle">저장용 GitHub 토큰</div>
-      <div class="sn-pdesc">보는 사람은 필요 없습니다. 작성자만 한 번 입력하면 이 브라우저에 기억됩니다.<br>
+      <div class="sn-pdesc">보는 사람은 필요 없습니다. 작성자만 한 번 입력하면 이 브라우저에 기억되고, 이후 작성 내용이 자동 저장됩니다.<br>
         GitHub → Settings → Developer settings → Fine-grained token → 저장소 <b>${OWNER}/${REPO}</b>, 권한 <b>Contents: Read and write</b></div>
       <input id="snToken" type="password" placeholder="github_pat_… 또는 ghp_…" autocomplete="off">
       <div class="sn-prow"><button id="snTokenSave" class="sn-btn sn-primary" type="button">토큰 저장</button>
@@ -75,8 +78,16 @@
     }
   }
   function markDirty() {
-    dirty = true; ls.set(LS_DIRTY, '1');
-    status('저장 안 된 변경 있음 — 💾 저장(공유)을 눌러야 다른 사람에게 보입니다', 'warn');
+    dirty = true; ver++; ls.set(LS_DIRTY, '1');
+    if (ls.get(LS_TOKEN)) { status('자동 저장 대기 중…', 'warn'); scheduleAutoSave(); }
+    else status('저장 안 된 변경 있음 — ⚙에서 토큰을 넣으면 자동 저장됩니다', 'warn');
+  }
+  // ─── 자동 저장: 작성을 멈추고 5초 뒤 (직전 저장 후 최소 1분 간격) ───
+  function scheduleAutoSave() {
+    if (!ls.get(LS_TOKEN)) return;
+    clearTimeout(timer);
+    const wait = Math.max(AUTO_IDLE_MS, AUTO_MIN_GAP_MS - (Date.now() - lastSaveAt));
+    timer = setTimeout(() => save(), wait);
   }
   function clearDirty() { dirty = false; ls.del(LS_DIRTY); }
 
@@ -92,7 +103,7 @@
     if (localDirty || (!hasRemote && hasLocal)) {
       // 이 브라우저에 저장 안 된 작성분이 있으면 그대로 두고 저장을 안내
       markDirty();
-      if (!hasRemote && hasLocal) status('이 브라우저에만 있는 메모가 있습니다 — 💾 저장(공유)을 누르면 모두에게 공개됩니다', 'warn');
+      if (!hasRemote && hasLocal && !ls.get(LS_TOKEN)) status('이 브라우저에만 있는 메모가 있습니다 — ⚙에서 토큰을 넣으면 자동 저장됩니다', 'warn');
     } else {
       apply(remote || {});
       clearDirty();
@@ -105,28 +116,36 @@
   async function save() {
     const token = ls.get(LS_TOKEN);
     if (!token) { document.getElementById('snPanel').hidden = false; status('저장하려면 먼저 GitHub 토큰을 입력해 주세요', 'warn'); return; }
+    if (saving) { scheduleAutoSave(); return; }
+    clearTimeout(timer); saving = true;
+    const startVer = ver;
     const btn = document.getElementById('snSave'); btn.disabled = true; status('저장 중…', '');
     const api = `https://api.github.com/repos/${OWNER}/${REPO}/contents/${PATH}`;
     const headers = { Authorization: `Bearer ${token}`, Accept: 'application/vnd.github+json' };
     try {
-      let sha;
-      const cur = await fetch(`${api}?ref=${BRANCH}&t=${Date.now()}`, { headers, cache: 'no-store' });
-      if (cur.ok) sha = (await cur.json()).sha;
-      else if (cur.status !== 404) throw new Error(cur.status === 401 ? '토큰이 올바르지 않거나 만료되었습니다' : cur.status === 403 ? '이 토큰에 저장 권한이 없습니다' : `GitHub 응답 ${cur.status}`);
+      const getSha = async () => {
+        const cur = await fetch(`${api}?ref=${BRANCH}&t=${Date.now()}`, { headers, cache: 'no-store' });
+        if (cur.ok) return (await cur.json()).sha;
+        if (cur.status === 404) return undefined;
+        throw new Error(cur.status === 401 ? '토큰이 올바르지 않거나 만료되었습니다' : cur.status === 403 ? '이 토큰에 저장 권한이 없습니다 (관리자 승인 대기 중일 수 있습니다)' : `GitHub 응답 ${cur.status}`);
+      };
       const data = { ...collect(), updatedAt: new Date().toISOString() };
-      const put = await fetch(api, {
+      const doPut = async sha => fetch(api, {
         method: 'PUT', headers: { ...headers, 'Content-Type': 'application/json' },
         body: JSON.stringify({ message: 'notes: 발표 특이사항 업데이트', content: b64(JSON.stringify(data, null, 2)), branch: BRANCH, ...(sha ? { sha } : {}) })
       });
+      let put = await doPut(await getSha());
+      if (put.status === 409 || put.status === 422) put = await doPut(await getSha());   // 버전 충돌 시 최신 기준으로 1회 재시도
       if (!put.ok) {
         const j = await put.json().catch(() => ({}));
         throw new Error(put.status === 409 ? '다른 곳에서 먼저 저장되었습니다. 새로고침 후 다시 저장해 주세요' : put.status === 403 || put.status === 404 ? '이 토큰에 저장 권한이 없습니다 (Contents: Read and write 필요)' : (j.message || `GitHub 응답 ${put.status}`));
       }
-      remote = data; clearDirty();
-      status(`저장 완료 · 1~2분 후 다른 사람 화면에 반영됩니다`, 'ok');
+      remote = data; lastSaveAt = Date.now();
+      if (ver === startVer) { clearDirty(); status(`자동 저장됨 · ${fmtTime(data.updatedAt)} · 1~2분 후 다른 사람 화면에 반영`, 'ok'); }
+      else scheduleAutoSave();   // 저장하는 동안 더 작성한 내용은 이어서 저장
     } catch (e) {
       status('저장 실패: ' + e.message, 'err');
-    } finally { btn.disabled = false; }
+    } finally { btn.disabled = false; saving = false; }
   }
 
   // ─── 변경 감지 ───
@@ -145,7 +164,7 @@
     document.getElementById('snTokenSave').onclick = () => {
       const v = document.getElementById('snToken').value.trim(); if (!v) return;
       ls.set(LS_TOKEN, v); document.getElementById('snToken').value = ''; document.getElementById('snPanel').hidden = true;
-      status(dirty ? '토큰 저장됨 — 💾 저장(공유)을 눌러 주세요' : '토큰 저장됨', dirty ? 'warn' : 'ok');
+      if (dirty) save(); else status('토큰 저장됨 · 이제 작성하면 자동 저장됩니다', 'ok');
     };
     document.getElementById('snTokenDel').onclick = () => { ls.del(LS_TOKEN); status('토큰을 삭제했습니다', ''); };
     // 기존 초기화(분석 자동 실행 등)가 편집기를 그린 뒤에 공유본을 적용

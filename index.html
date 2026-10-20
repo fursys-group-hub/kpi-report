@@ -319,7 +319,7 @@ body {
             style="min-height:130px;background:var(--sidiz-dark);border:1px solid var(--border);border-radius:6px;color:var(--text-primary);font-size:12px;padding:10px;outline:none;font-family:'Noto Sans KR',sans-serif;line-height:1.8;word-break:break-all"
             oninput="localStorage.setItem('costSpecialNote',this.innerHTML)"
           ></div>
-          <div style="font-size:10px;color:var(--text-muted);margin-top:5px">텍스트 선택 후 위 버튼으로 굵게·색상 강조 적용 가능 · 작성 후 하단 💾 저장(공유)을 누르면 모든 사람에게 보입니다</div>
+          <div style="font-size:10px;color:var(--text-muted);margin-top:5px">텍스트 선택 후 위 버튼으로 굵게·색상 강조 적용 가능 · 작성 내용은 자동 저장되어 1~2분 후 모든 사람에게 보입니다</div>
         </div>
         <div style="border-top:1px solid var(--border);padding-top:16px">
           <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
@@ -1166,7 +1166,7 @@ window.runKpiAutoAnalysis = async function() {
         style="min-height:420px;background:var(--sidiz-dark);border:1px solid var(--border);border-radius:6px;color:var(--text-primary);font-size:12px;padding:10px;outline:none;font-family:'Noto Sans KR',sans-serif;line-height:1.8;word-break:break-all"
         oninput="localStorage.setItem('kpiSpecialNote',this.innerHTML)"
       >${_savedNote}</div>
-      <div style="font-size:10px;color:var(--text-muted);margin-top:5px">텍스트 선택 후 위 버튼으로 굵게·색상 강조 적용 가능 · 작성 후 하단 💾 저장(공유)을 누르면 모든 사람에게 보입니다</div>
+      <div style="font-size:10px;color:var(--text-muted);margin-top:5px">텍스트 선택 후 위 버튼으로 굵게·색상 강조 적용 가능 · 작성 내용은 자동 저장되어 1~2분 후 모든 사람에게 보입니다</div>
     </div>`;
   document.getElementById('kpiAnPartTable').innerHTML = '';
 };
@@ -1320,6 +1320,6 @@ document.addEventListener('DOMContentLoaded', async function() {
 });
 </script>
 
-<script src="shared-notes.js?v=20260929"></script>
+<script src="shared-notes.js?v=20261021"></script>
 </body>
 </html>
