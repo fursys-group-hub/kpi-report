@@ -945,6 +945,12 @@ function renderCostTable(data, year, range, pd, py) {
   h += ratioArr.map((v, i) => { const dim = i >= range ? ' style="opacity:0.25"' : ''; return `<td${dim}>${v}</td>`; }).join('');
   h += `<td>${yearRatio}%</td></tr>`;
   h += '</tbody></table>';
+  if (String(year) === '2026') {
+    h += `<div style="margin-top:10px;padding:10px 14px;font-size:12px;line-height:1.7;color:var(--text-secondary);background:var(--sidiz-dark2);border-radius:8px">
+      ※ 본 표는 시디즈 단독 실패비용 지표이나, (판)하자보수비의 <b>자재</b> 및 <b>클레임 보상</b> 금액에 관계사 금액이 일부 포함되어 있습니다.<br>
+      &nbsp;&nbsp;&nbsp;관계사 금액 분리 작업은 아직 반영 전이며, 다음 품질경영위원회 보고 시 수정·반영할 예정입니다.
+    </div>`;
+  }
   container.innerHTML = h;
 }
 
