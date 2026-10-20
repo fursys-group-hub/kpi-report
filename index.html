@@ -1126,7 +1126,7 @@ window.runKpiAutoAnalysis = async function() {
   } else {
     const items = [...new Set([...Object.keys(pPrev), ...Object.keys(pCur)])]
       .map(k => ({ k, a: pPrev[k] || 0, b: pCur[k] || 0 })).map(o => ({ ...o, d: o.b - o.a }))
-      .filter(o => Math.abs(o.d) >= 3).sort((x, y) => x.d - y.d);
+      .filter(o => Math.abs(o.d) >= 3).sort((x, y) => y.d - x.d);
     const mx = Math.max(1, ...items.map(o => Math.abs(o.d)));
     const th = 'padding:6px 8px;color:var(--text-muted);font-weight:600;font-size:11px;border-bottom:1px solid var(--border);background:var(--sidiz-dark)';
     const td = 'padding:5px 8px;border-bottom:1px solid var(--border);font-family:\'JetBrains Mono\',monospace;text-align:right';
