@@ -1,9 +1,9 @@
 {
-  "kpiSpecialNote": "<div><b>[T50 2세대]</b></div><div>- 포장 순서 오류로 인한 불량 1건 → 8건(좌판눌림)<b><span style=\"background-color: rgb(255, 171, 145);\">(7건 증가)</span></b></div><div><b>[T60]</b></div><div>- 좌판 소음 건 1건 → 5건<b><span style=\"background-color: rgb(255, 171, 145);\">(4건 증가)</span></b></div><div><b>[T90]</b></div><div>- 중심봉 소음 건 2건 → 7건<b><span style=\"background-color: rgb(255, 171, 145);\">(5건 증가)</span></b></div><div><b>[GX]</b></div><div>- 헤드레스트 핀 빠짐 건 15건 → 9건<b><span style=\"background-color: rgb(144, 202, 249);\">(6건 감소)</span></b></div><div><b>[T21]</b></div><div>- 헤드레스트 조립 미숙 4건 → 0건<b><span style=\"background-color: rgb(144, 202, 249);\">(4건 감소)</span></b></div>",
-  "costSpecialNote": "<div><b>[제품 교체 비용 증가]</b></div><div>- T90 교체비용 증가 : 2,757,000원 → <b>15,267,000원</b>(12,510,000원 증가)</div><div>- T50 2세대 교체비용 증가 : 2,583,000원 → <b>4,879,000원</b>(2,296,000원 증가)</div>",
   "memo": {
     "claim": [],
     "cost": []
   },
-  "updatedAt": "2026-10-20T23:44:26.202686Z"
+  "kpiSpecialNote": "<div><b>[T50 2세대]</b></div><div>- 포장 순서 오류로 인한 불량 1건 → 8건(좌판눌림)<b><span style=\"background-color: rgb(255, 171, 145);\">(7건 증가)</span></b></div><div><b>[T60]</b></div><div>- 좌판 소음 건 1건 → 5건<b><span style=\"background-color: rgb(255, 171, 145);\">(4건 증가)</span></b></div><div><b>[T90]</b></div><div>- 중심봉 소음 건 2건 → 7건<b><span style=\"background-color: rgb(255, 171, 145);\">(5건 증가)</span></b></div><div><b>[GX]</b></div><div>- 헤드레스트 핀 빠짐 건 15건 → 9건<b><span style=\"background-color: rgb(144, 202, 249);\">(6건 감소)</span></b></div><div><b>[T21]</b></div><div>- 헤드레스트 조립 미숙 4건 → 0건<b><span style=\"background-color: rgb(144, 202, 249);\">(4건 감소)</span></b></div>",
+  "costSpecialNote": "<div><b>[제품 교체 비용 증가]</b></div><div>- T90 교체비용 증가 : 2,757,000원 → <b>15,267,000원</b>(12,510,000원 증가)</div><div>- T50 2세대 교체비용 증가 : 2,583,000원 → <b>4,879,000원</b>(2,296,000원 증가)</div>",
+  "updatedAt": "2026-10-21T00:11:33.478Z"
 }
