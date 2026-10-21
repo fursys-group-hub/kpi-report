@@ -273,7 +273,7 @@ body {
     <div id="costKpiCards" class="cost-grid"></div>
     <div class="chart-card" style="margin-bottom:24px;padding:24px">
       <h3 style="margin-bottom:4px">실패비용 추이 (비용 + 매출액 대비 비율)</h3>
-      <p style="font-size:11px;color:var(--text-muted);margin-bottom:16px">막대: 하자보수비+바로스AS 합계(만원) · 꺾은선: 매출액 대비 비율(%) · 점선: 목표</p>
+      <p style="font-size:11px;color:var(--text-muted);margin-bottom:16px">막대: 하자보수비+레터스 합계(만원) · 꺾은선: 매출액 대비 비율(%) · 점선: 목표</p>
       <canvas id="costComboChart" height="110"></canvas>
     </div>
     <div id="costDetailTable" class="data-table-wrapper"></div>
@@ -284,7 +284,7 @@ body {
         <div style="display:flex;align-items:center;gap:10px">
           <span style="font-size:16px">💰</span>
           <span style="font-weight:600;font-size:14px;color:var(--text-primary)">전월 대비 자동 분석</span>
-          <span style="font-size:11px;color:var(--text-muted)">(판)하자보수비 · 바로스AS · 매출 대비 비율</span>
+          <span style="font-size:11px;color:var(--text-muted)">(판)하자보수비 · 레터스 · 매출 대비 비율</span>
         </div>
         <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
           <label style="font-size:11px;color:var(--text-muted)">전월</label>
@@ -806,10 +806,10 @@ function renderCostCards(data, year, range) {
   const barosAvg = Math.round(barosTotal / mc);
   container.innerHTML = `
     <div class="cost-card"><div class="cost-label">하자보수비 (월평균)</div><div class="cost-value" style="color:var(--accent-rose)">${costFmtManUnit(hazaAvg)}</div><div class="cost-sub">목표: ${costFmtManUnit(data.target?.haza_subtotal)}</div></div>
-    <div class="cost-card"><div class="cost-label">바로스 AS 용역료 (월평균)</div><div class="cost-value" style="color:var(--accent-amber)">${costFmtManUnit(barosAvg)}</div><div class="cost-sub">목표: ${costFmtManUnit(data.target?.baros_subtotal)}</div></div>
+    <div class="cost-card"><div class="cost-label">레터스 용역료 (월평균)</div><div class="cost-value" style="color:var(--accent-amber)">${costFmtManUnit(barosAvg)}</div><div class="cost-sub">목표: ${costFmtManUnit(data.target?.baros_subtotal)}</div></div>
     <div class="cost-card"><div class="cost-label">매출액 대비 비율</div><div class="cost-value" style="color:var(--accent-violet)">${ratio}%</div><div class="cost-sub">목표: ${targetRatio}%</div></div>
     <div class="cost-card"><div class="cost-label">누적 하자보수비</div><div class="cost-value" style="color:var(--sidiz-blue-bright)">${costFmtEok(hazaTotal)}</div><div class="cost-sub">${mc}개월</div></div>
-    <div class="cost-card"><div class="cost-label">누적 바로스 AS</div><div class="cost-value" style="color:var(--accent-cyan)">${costFmtEok(barosTotal)}</div><div class="cost-sub">${mc}개월</div></div>`;
+    <div class="cost-card"><div class="cost-label">누적 레터스</div><div class="cost-value" style="color:var(--accent-cyan)">${costFmtEok(barosTotal)}</div><div class="cost-sub">${mc}개월</div></div>`;
 }
 
 function renderCostComboChart(data, year, range) {
@@ -856,7 +856,7 @@ function renderCostComboChart(data, year, range) {
       datasets: [
         { label: '(판)하자보수비', data: hazaM, backgroundColor: 'rgba(255,76,106,0.78)', borderColor: 'transparent', borderWidth: 0, borderRadius: 6, borderSkipped: false, order: 3, yAxisID: 'y' },
         { label: '(제)하자보수비', data: jeHazaM, backgroundColor: 'rgba(148,163,184,0.70)', borderColor: 'transparent', borderWidth: 0, borderRadius: 6, borderSkipped: false, order: 3, yAxisID: 'y' },
-        { label: '바로스 AS', data: barosM, backgroundColor: 'rgba(230,168,0,0.78)', borderColor: 'transparent', borderWidth: 0, borderRadius: 6, borderSkipped: false, order: 3, yAxisID: 'y' },
+        { label: '레터스', data: barosM, backgroundColor: 'rgba(230,168,0,0.78)', borderColor: 'transparent', borderWidth: 0, borderRadius: 6, borderSkipped: false, order: 3, yAxisID: 'y' },
         { label: '매출 대비 비율(%)', data: ratioArr, type: 'line', borderColor: '#7c5fe6', backgroundColor: 'rgba(124,95,230,0.08)', borderWidth: 2.5, pointRadius: 5, pointBackgroundColor: '#ffffff', pointBorderColor: '#7c5fe6', pointBorderWidth: 2, pointHoverRadius: 7, tension: 0.4, fill: false, order: 1, yAxisID: 'y1', spanGaps: false },
         { label: '목표 (' + targetRatio.toFixed(2) + '%)', data: Array(12).fill(targetRatio), type: 'line', borderColor: 'rgba(0,184,122,0.65)', borderWidth: 2, borderDash: [6, 4], pointRadius: 0, fill: false, order: 2, yAxisID: 'y1' }
       ]
@@ -903,7 +903,7 @@ function renderCostTable(data, year, range, pd, py) {
     if (!rev || rev === 0) return '-';
     return ((total[i] / rev) * 100).toFixed(2) + '%';
   });
-  let h = `<div class="data-table-header"><h3>하자보수비 및 바로스 용역료 상세 (${year}년${rangeLabel}, 단위: 만원)</h3></div>
+  let h = `<div class="data-table-header"><h3>하자보수비 및 레터스 용역료 상세 (${year}년${rangeLabel}, 단위: 만원)</h3></div>
   <table class="data-table"><thead><tr><th style="text-align:left" colspan="2">구분</th><th style="text-align:center">${py}평균</th><th style="text-align:center">${year}목표</th><th style="text-align:center">${year}평균</th>${mh}<th>누적</th></tr></thead><tbody>`;
   h += `<tr style="background:rgba(0,87,184,0.03)"><td class="row-header" colspan="2">매출액</td><td>${costFmtEok(prevAvg.revenue || yAvg?.revenue)}</td><td>${costFmtEok(tgt.revenue)}</td><td>${costFmtEok(avg(data.revenue))}</td>`;
   h += data.revenue.map((v, i) => { const dim = i >= range ? ' style="opacity:0.25"' : ''; return `<td${dim}>${costFmtEok(v)}</td>`; }).join('');
@@ -924,7 +924,7 @@ function renderCostTable(data, year, range, pd, py) {
   h += `<tr style="font-weight:600"><td class="row-header" ${visibleHazaRows.length===0?'colspan="2"':''}>계</td><td>${prevAvgFmt('haza_subtotal')}</td><td>${tgtFmt('haza_subtotal')}</td><td>${yearAvgFmt(computedHazaSub)}</td>${mc(computedHazaSub)}<td>${costFmtMan(cumul(computedHazaSub))}</td></tr>`;
   const jeHaza = data.je_haza || Array(12).fill(0);
   h += `<tr style="background:rgba(255,179,71,0.05)"><td class="row-header" colspan="1">(제)하자보수비</td><td class="row-header">폐기</td><td>${prevAvgFmt('je_haza')}</td><td>${tgtFmt('je_haza')}</td><td>${yearAvgFmt(jeHaza)}</td>${mc(jeHaza)}<td>${costFmtMan(cumul(jeHaza))}</td></tr>`;
-  h += `<tr><td class="row-header" rowspan="4">바로스 AS</td><td class="row-header">AS 컨택센터</td><td>${prevAvgFmt('baros_contact')}</td><td>${tgtFmt('baros_contact')}</td><td>${yearAvgFmt(data.baros_contact)}</td>${mc(data.baros_contact)}<td>${costFmtMan(cumul(data.baros_contact))}</td></tr>`;
+  h += `<tr><td class="row-header" rowspan="4">레터스</td><td class="row-header">AS 컨택센터</td><td>${prevAvgFmt('baros_contact')}</td><td>${tgtFmt('baros_contact')}</td><td>${yearAvgFmt(data.baros_contact)}</td>${mc(data.baros_contact)}<td>${costFmtMan(cumul(data.baros_contact))}</td></tr>`;
   h += `<tr><td class="row-header">AS조치비(무상)</td><td>${prevAvgFmt('baros_as')}</td><td>${tgtFmt('baros_as')}</td><td>${yearAvgFmt(data.baros_as)}</td>${mc(data.baros_as)}<td>${costFmtMan(cumul(data.baros_as))}</td></tr>`;
   h += `<tr><td class="row-header">AS물류비</td><td>${prevAvgFmt('baros_logistics')}</td><td>${tgtFmt('baros_logistics')}</td><td>${yearAvgFmt(data.baros_logistics)}</td>${mc(data.baros_logistics)}<td>${costFmtMan(cumul(data.baros_logistics))}</td></tr>`;
   h += `<tr style="font-weight:600"><td class="row-header">계</td><td>${prevAvgFmt('baros_subtotal')}</td><td>${tgtFmt('baros_subtotal')}</td><td>${yearAvgFmt(data.baros_subtotal)}</td>${mc(data.baros_subtotal)}<td>${costFmtMan(cumul(data.baros_subtotal))}</td></tr>`;
@@ -1225,7 +1225,7 @@ window.runCostAutoAnalysis = async function() {
     ['ㄴ 자재비',        cd.haza_material,  false],
     ['ㄴ 클레임보상',    cd.haza_claim,     false],
     ['(제)하자보수비',   cd.je_haza,        true],
-    ['바로스 AS 계',     cd.baros_subtotal, true],
+    ['레터스 계',     cd.baros_subtotal, true],
     ['ㄴ AS컨택센터',    cd.baros_contact,  false],
     ['ㄴ AS조치비(무상)',cd.baros_as,       false],
     ['ㄴ AS물류비',      cd.baros_logistics,false],
