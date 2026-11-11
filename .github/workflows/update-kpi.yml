@@ -1,9 +1,8 @@
 name: KPI 자동 업데이트
 
 on:
-  # 매일 오전 9시 (KST = UTC+9 → UTC 0시) — 올해 1월~지난달을 DB 최신값으로 갱신
-  schedule:
-    - cron: '0 0 * * *'
+  # 2026-11-10부터 사내 DB가 회사 네트워크에서만 접속되어 GitHub 서버에서는 실패함
+  # → 예약 실행은 끄고, 회사 PC의 작업 스케줄러(run-update.ps1, 매일 09:00)가 대신 실행
   # 수동 실행 (테스트용)
   workflow_dispatch:
 
