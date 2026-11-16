@@ -6,6 +6,8 @@
   const EDITORS = { kpiSpecialNote: '_kpiNoteEditor', costSpecialNote: '_costNoteEditor' };
   let remote = null;          // 마지막으로 불러온 notes.json
   let dirty = false;
+  // Confluence 등 다른 페이지 안(iframe)에 삽입돼 열렸으면 보기 전용 — 토큰·저장 안내를 띄우지 않고 항상 공유본만 표시
+  const VIEW_ONLY = (() => { try { return window.self !== window.top; } catch (e) { return true; } })();
   let ver = 0;                // 편집할 때마다 +1 (저장 중 추가 편집 감지)
   let timer = null, saving = false, lastSaveAt = 0;
   const AUTO_IDLE_MS = 5000, AUTO_MIN_GAP_MS = 60000;   // 작성 멈춘 뒤 5초, 저장 간격 최소 1분
@@ -97,6 +99,7 @@
       const res = await fetch(`${PATH}?t=${Date.now()}`, { cache: 'no-store' });
       remote = res.ok ? await res.json() : {};
     } catch (e) { remote = {}; }
+    if (VIEW_ONLY) { apply(remote || {}); return; }
     const localDirty = ls.get(LS_DIRTY) === '1';
     const hasLocal = Object.keys(EDITORS).some(k => (ls.get(k) || '').replace(/<br>|&nbsp;|\s/g, '') !== '');
     const hasRemote = remote && (remote.updatedAt || Object.keys(EDITORS).some(k => remote[k]));
@@ -148,16 +151,41 @@
     } finally { btn.disabled = false; saving = false; }
   }
 
-  // ─── 변경 감지 ───
-  document.addEventListener('input', e => { if (Object.values(EDITORS).includes(e.target?.id)) markDirty(); });
-  document.addEventListener('mouseup', e => { if (e.target?.closest?.('button[onmousedown*="execCommand"]')) setTimeout(markDirty, 0); });
-  ['addKpiNoteEntry', 'removeKpiNoteEntry', 'deleteSelectedKpiNotes'].forEach(fn => {
+  // ─── 변경 감지 (보기 전용이면 감지하지 않음) ───
+  if (!VIEW_ONLY) document.addEventListener('input', e => { if (Object.values(EDITORS).includes(e.target?.id)) markDirty(); });
+  if (!VIEW_ONLY) document.addEventListener('mouseup', e => { if (e.target?.closest?.('button[onmousedown*="execCommand"]')) setTimeout(markDirty, 0); });
+  if (!VIEW_ONLY) ['addKpiNoteEntry', 'removeKpiNoteEntry', 'deleteSelectedKpiNotes'].forEach(fn => {
     const orig = window[fn]; if (typeof orig !== 'function') return;
     window[fn] = function (...a) { const r = orig.apply(this, a); markDirty(); return r; };
   });
-  window.addEventListener('beforeunload', e => { if (dirty) { e.preventDefault(); e.returnValue = ''; } });
+  if (!VIEW_ONLY) window.addEventListener('beforeunload', e => { if (dirty) { e.preventDefault(); e.returnValue = ''; } });
+
+  // ─── 보기 전용 화면: 편집 잠금 + '새 창에서 작성' 버튼만 표시 ───
+  function mountViewOnly() {
+    const st = document.createElement('style');
+    st.textContent = `
+      body.sn-view button[onmousedown*="execCommand"]{display:none}
+      body.sn-view #kpiClaimNoteInput, body.sn-view #kpiCostNoteInput{display:none}
+      body.sn-view button[onclick^="addKpiNoteEntry"], body.sn-view button[onclick^="deleteSelectedKpiNotes"], body.sn-view .kpi-note-del, body.sn-view input[class^="kpi-note-chk"]{display:none}
+      #snViewPill{position:fixed;right:16px;bottom:calc(16px + env(safe-area-inset-bottom,0px));z-index:9999;display:inline-flex;align-items:center;gap:6px;
+        background:#fff;border:1px solid #d9dce3;border-radius:999px;padding:7px 14px;box-shadow:0 4px 16px rgba(0,0,0,.12);
+        font:600 12px 'Noto Sans KR',sans-serif;color:#002BD2;text-decoration:none}
+      #snViewPill:hover{background:#EEF0FF}
+      @media print{#snViewPill{display:none}}`;
+    document.head.appendChild(st);
+    document.body.classList.add('sn-view');
+    const a = document.createElement('a');
+    a.id = 'snViewPill'; a.href = location.origin + location.pathname; a.target = '_blank'; a.rel = 'noopener';
+    a.textContent = '✏️ 메모 작성은 새 창에서';
+    a.title = '토큰을 넣은 브라우저에서 kpi-report를 직접 열어 작성하면 자동 저장되어 여기에도 1~2분 후 반영됩니다';
+    document.body.appendChild(a);
+    const lock = () => Object.values(EDITORS).forEach(id => { const e = document.getElementById(id); if (e && e.getAttribute('contenteditable') !== 'false') e.setAttribute('contenteditable', 'false'); });
+    lock(); new MutationObserver(lock).observe(document.body, { childList: true, subtree: true });
+    setTimeout(load, 900);
+  }
 
   function mount() {
+    if (VIEW_ONLY) return mountViewOnly();
     document.body.appendChild(bar);
     document.getElementById('snSave').onclick = save;
     document.getElementById('snCfg').onclick = () => { const p = document.getElementById('snPanel'); p.hidden = !p.hidden; };
