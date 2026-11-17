@@ -917,11 +917,23 @@ function renderCostTable(data, year, range, pd, py) {
     { key: 'haza_claim', label: '클레임 보상' },
   ];
   const visibleHazaRows = hazaRows.filter(r => { const arr = data[r.key]; if (!arr) return false; return arr.some(v => v > 0) || (prevAvg[r.key] && prevAvg[r.key] > 0) || (yAvg && yAvg[r.key] && yAvg[r.key] > 0) || (tgt[r.key] && tgt[r.key] > 0); });
+  // '제품'·'자재'·'클레임 보상' 행 클릭 → 상세 분석을 행 바로 아래로 펼침 (as-cost.js · fc-detail.js, 데이터 cost-detail.json)
+  const FCK = { haza_material: 'material', haza_claim: 'claim' };
+  const isProd = r => r?.key === 'haza_product' && window.AsCost;
+  const isFc = r => r && FCK[r.key] && window.FcDetail;
+  const hazaLabel = r => (isProd(r) || isFc(r))
+    ? `<span style="color:var(--sidiz-blue,#002BD2);white-space:nowrap">${r.label} <span style="font-size:10px">▼ 상세</span></span>` : (r?.label || '');
+  const prodTr = r => isProd(r)
+    ? `<tr class="cost-prod-row" title="클릭하면 AS 제품 조치비용 분석이 아래로 펼쳐집니다" onclick="if(!event.target.closest('#costHazaHead'))AsCost.open('${year}',this)">`
+    : isFc(r) ? `<tr class="cost-prod-row" title="클릭하면 ${r.label} 분석이 아래로 펼쳐집니다" onclick="if(!event.target.closest('#costHazaHead'))FcDetail.open('${FCK[r.key]}','${year}',this)">`
+    : '<tr>';
+  if (window.AsCost) AsCost.close();
+  if (window.FcDetail) FcDetail.close();
   if (visibleHazaRows.length > 0) {
-    h += `<tr><td class="row-header" rowspan="${visibleHazaRows.length + 1}">(판)하자보수비</td><td class="row-header">${visibleHazaRows[0].label}</td><td>${prevAvgFmt(visibleHazaRows[0].key)}</td><td>${tgtFmt(visibleHazaRows[0].key)}</td><td>${yearAvgFmt(data[visibleHazaRows[0].key] || [])}</td>${mc(data[visibleHazaRows[0].key] || [])}<td>${costFmtMan(cumul(data[visibleHazaRows[0].key] || []))}</td></tr>`;
+    h += `${prodTr(visibleHazaRows[0])}<td class="row-header" id="costHazaHead" rowspan="${visibleHazaRows.length + 1}">(판)하자보수비</td><td class="row-header">${hazaLabel(visibleHazaRows[0])}</td><td>${prevAvgFmt(visibleHazaRows[0].key)}</td><td>${tgtFmt(visibleHazaRows[0].key)}</td><td>${yearAvgFmt(data[visibleHazaRows[0].key] || [])}</td>${mc(data[visibleHazaRows[0].key] || [])}<td>${costFmtMan(cumul(data[visibleHazaRows[0].key] || []))}</td></tr>`;
     for (let i = 1; i < visibleHazaRows.length; i++) {
       const r = visibleHazaRows[i];
-      h += `<tr><td class="row-header">${r.label}</td><td>${prevAvgFmt(r.key)}</td><td>${tgtFmt(r.key)}</td><td>${yearAvgFmt(data[r.key] || [])}</td>${mc(data[r.key] || [])}<td>${costFmtMan(cumul(data[r.key] || []))}</td></tr>`;
+      h += `${prodTr(r)}<td class="row-header">${hazaLabel(r)}</td><td>${prevAvgFmt(r.key)}</td><td>${tgtFmt(r.key)}</td><td>${yearAvgFmt(data[r.key] || [])}</td>${mc(data[r.key] || [])}<td>${costFmtMan(cumul(data[r.key] || []))}</td></tr>`;
     }
   }
   h += `<tr style="font-weight:600"><td class="row-header" ${visibleHazaRows.length===0?'colspan="2"':''}>계</td><td>${prevAvgFmt('haza_subtotal')}</td><td>${tgtFmt('haza_subtotal')}</td><td>${yearAvgFmt(computedHazaSub)}</td>${mc(computedHazaSub)}<td>${costFmtMan(cumul(computedHazaSub))}</td></tr>`;
@@ -1323,6 +1335,8 @@ document.addEventListener('DOMContentLoaded', async function() {
 });
 </script>
 
+<script src="as-cost.js?v=20261117"></script>
+<script src="fc-detail.js?v=20261117"></script>
 <script src="savings.js?v=20261116"></script>
 <script src="shared-notes.js?v=20261116"></script>
 </body>

@@ -1,2 +1,4 @@
 node_modules/
 .env
+run-update.ps1
+update.log
