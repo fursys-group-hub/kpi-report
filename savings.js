@@ -44,7 +44,7 @@ const SAVINGS = {
   #savingsSection .sv-body{padding:20px 22px;display:grid;gap:22px}
   #savingsSection .sv-label{font-size:12px;font-weight:700;color:var(--text-secondary);margin-bottom:10px}
   /* 흐름 */
-  #savingsSection .sv-flow{display:grid;grid-template-columns:1fr auto 1fr auto 1.3fr;align-items:stretch;gap:10px}
+  #savingsSection .sv-flow{display:grid;grid-template-columns:1fr auto 1.3fr;align-items:stretch;gap:10px}
   #savingsSection .sv-step{border:1px solid var(--border);border-radius:12px;padding:14px 16px;background:var(--sidiz-dark)}
   #savingsSection .sv-step .k{font-size:11px;color:var(--text-muted);font-weight:600}
   #savingsSection .sv-step .v{font-family:'JetBrains Mono',monospace;font-size:26px;font-weight:800;color:var(--text-primary);line-height:1.2;margin-top:4px}
@@ -129,11 +129,9 @@ const SAVINGS = {
       </div>
       <div class="sv-body">
         <div>
-          <div class="sv-label">① 매일 접수 건별 검토 → 품질관리팀 확인 → 전환</div>
+          <div class="sv-label">① 품질관리팀 확인 → 전환</div>
           <div class="sv-flow">
-            <div class="sv-step"><div class="k">접수 검토 <span class="sv-pm">${S.periodShort} 누계</span></div><div class="v">${S.reviewed}<small>건</small></div><div class="s">제품 교체·무상 처리 예정 건</div></div>
-            <div class="sv-arrow">›</div>
-            <div class="sv-step"><div class="k">전환 성공 <span class="sv-pm">${S.periodShort} 누계</span></div><div class="v">${S.accepted}<small>건</small></div><div class="s">집행까지 추적 · 전환 실패·재발 ${S.reviewed - S.accepted}건 제외</div></div>
+            <div class="sv-step"><div class="k">전환 성공 <span class="sv-pm">${S.periodShort} 누계</span></div><div class="v">${S.accepted}<small>건</small></div></div>
             <div class="sv-arrow">›</div>
             <div class="sv-step hero"><div class="k">비용 방지액 <span class="sv-pm">${S.periodShort} 누계</span></div><div class="v">${won(S.total)}<small style="color:rgba(255,255,255,.8)">원</small></div>
               <div class="sv-annual"><span>월평균 <b>${man(S.total / S.months)}원</b></span><span>연간 환산 <b>약 ${Math.round(S.total / S.months * 12 / 10000).toLocaleString('ko-KR')}만원</b></span></div>
