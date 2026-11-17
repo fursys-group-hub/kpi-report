@@ -128,7 +128,7 @@ const SAVINGS = {
       <div class="sv-head">
         <span class="sv-title">실패비용 저감 활동 · 접수 단계 비용 방지</span>
         <span class="sv-chip">${S.period} · ${S.months}개월 누계</span>
-        <span class="sv-chip warn">실패비용 미포함 · 발생을 막은 비용</span>
+        <span class="sv-chip warn">실패비용 방지 비용</span>
       </div>
       <div class="sv-body">
         <div>

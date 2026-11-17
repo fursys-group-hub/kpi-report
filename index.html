@@ -1125,12 +1125,16 @@ window.runKpiAutoAnalysis = async function() {
       const diffStr = !hasBoth ? '-'
         : diff === 0 ? '─'
         : `<span style="color:${arrowColor(diff)}">${arrowMark(diff)} ${Math.abs(diff)}</span>`;
-      t += `<tr style="border-bottom:1px solid var(--border)">
+      const jr = (typeof JUDGE_REASONS !== 'undefined' && JUDGE_REASONS[curYm] && JUDGE_REASONS[curYm][r.cat]) || null;
+      t += `<tr style="border-bottom:1px solid var(--border)${jr ? ';cursor:pointer' : ''}"${jr ? ` class="jr-row" onclick="toggleJudgeReason(this)"` : ''}>
         <td style="padding:7px 10px;font-weight:500">${r.cat}</td>
         <td style="text-align:center;padding:7px 10px;font-family:'JetBrains Mono',monospace">${r.prev > 0 ? r.prev : '-'}</td>
         <td style="text-align:center;padding:7px 10px;font-family:'JetBrains Mono',monospace">${r.cur > 0 ? r.cur : '-'}</td>
         <td style="text-align:center;padding:7px 10px">${diffStr}</td>
       </tr>`;
+      if (jr) t += `<tr class="jr-detail" style="display:none"><td colspan="4" style="padding:4px 10px 12px 22px;border-bottom:1px solid var(--border)">${
+        jr.map(([txt, a, b]) => { const d = b - a; return `<div style="padding:3px 0;line-height:1.6">· ${txt} ${a}건 → ${b}건 <b style="color:${arrowColor(d)}">(${Math.abs(d)}건 ${d > 0 ? '증가' : '감소'})</b></div>`; }).join('')
+      }</td></tr>`;
     });
     t += `</tbody></table>`;
     document.getElementById('kpiAnCategoryTable').innerHTML = t;
@@ -1335,9 +1339,19 @@ document.addEventListener('DOMContentLoaded', async function() {
 });
 </script>
 
+<script src="judge-reasons.js?v=20261118"></script>
+<script>
+window.toggleJudgeReason = function (tr) {
+  const d = tr.nextElementSibling; if (!d || !d.classList.contains('jr-detail')) return;
+  const open = d.style.display !== 'none';
+  d.style.display = open ? 'none' : '';
+  tr.classList.toggle('jr-open', !open);
+};
+</script>
+<style>.jr-row:hover td,.jr-row.jr-open td{background:rgba(0,43,210,.05)}</style>
 <script src="as-cost.js?v=20261117"></script>
 <script src="fc-detail.js?v=20261117"></script>
-<script src="savings.js?v=20261118b"></script>
+<script src="savings.js?v=20261118c"></script>
 <script src="shared-notes.js?v=20261116"></script>
 </body>
 </html>
