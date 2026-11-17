@@ -44,7 +44,7 @@ const SAVINGS = {
   #savingsSection .sv-body{padding:20px 22px;display:grid;gap:22px}
   #savingsSection .sv-label{font-size:12px;font-weight:700;color:var(--text-secondary);margin-bottom:10px}
   /* 흐름 */
-  #savingsSection .sv-flow{display:grid;grid-template-columns:1fr auto 1.3fr;align-items:stretch;gap:10px}
+  #savingsSection .sv-flow{display:grid;grid-template-columns:1fr auto 1fr auto 1.3fr;align-items:stretch;gap:10px}
   #savingsSection .sv-step{border:1px solid var(--border);border-radius:12px;padding:14px 16px;background:var(--sidiz-dark)}
   #savingsSection .sv-step .k{font-size:11px;color:var(--text-muted);font-weight:600}
   #savingsSection .sv-step .v{font-family:'JetBrains Mono',monospace;font-size:26px;font-weight:800;color:var(--text-primary);line-height:1.2;margin-top:4px}
@@ -57,6 +57,9 @@ const SAVINGS = {
   #savingsSection .sv-step.hero .sv-pm{background:rgba(255,255,255,.2);color:#fff}
   #savingsSection .sv-annual{display:flex;flex-wrap:wrap;gap:6px 14px;margin-top:8px;padding-top:8px;border-top:1px solid rgba(255,255,255,.25);font-size:12px;color:rgba(255,255,255,.9)}
   #savingsSection .sv-annual b{font-family:'JetBrains Mono',monospace;font-size:14px;color:#fff}
+  #savingsSection .sv-live{font-size:20px!important;display:flex;align-items:center;gap:8px;color:#059669!important;font-family:inherit!important;letter-spacing:0!important}
+  #savingsSection .sv-livedot{flex:none;width:9px;height:9px;border-radius:50%;background:#10b981;animation:svPulse 1.8s infinite}
+  @keyframes svPulse{0%{box-shadow:0 0 0 0 rgba(16,185,129,.55)}70%{box-shadow:0 0 0 8px rgba(16,185,129,0)}100%{box-shadow:0 0 0 0 rgba(16,185,129,0)}}
   #savingsSection .sv-arrow{display:flex;align-items:center;color:var(--border-light);font-size:22px;font-weight:700}
   /* 2열 */
   #savingsSection .sv-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.2fr);gap:22px}
@@ -129,9 +132,11 @@ const SAVINGS = {
       </div>
       <div class="sv-body">
         <div>
-          <div class="sv-label">① 품질관리팀 확인 → 전환</div>
+          <div class="sv-label">① 매일 접수 건별 검토 → 품질관리팀 확인 → 전환</div>
           <div class="sv-flow">
-            <div class="sv-step"><div class="k">전환 성공 <span class="sv-pm">${S.periodShort} 누계</span></div><div class="v">${S.accepted}<small>건</small></div></div>
+            <div class="sv-step"><div class="k">접수 검토 <span class="sv-pm">매일</span></div><div class="v sv-live"><span class="sv-livedot"></span>실시간 모니터링</div><div class="s">제품 교체·무상 처리 예정 건 건별 확인</div></div>
+            <div class="sv-arrow">›</div>
+            <div class="sv-step"><div class="k">전환 성공 <span class="sv-pm">${S.periodShort} 누계</span></div><div class="v">${S.accepted}<small>건</small></div><div class="s">부품 조치 · 접수 차단 · 유상 전환</div></div>
             <div class="sv-arrow">›</div>
             <div class="sv-step hero"><div class="k">비용 방지액 <span class="sv-pm">${S.periodShort} 누계</span></div><div class="v">${won(S.total)}<small style="color:rgba(255,255,255,.8)">원</small></div>
               <div class="sv-annual"><span>월평균 <b>${man(S.total / S.months)}원</b></span><span>연간 환산 <b>약 ${Math.round(S.total / S.months * 12 / 10000).toLocaleString('ko-KR')}만원</b></span></div>

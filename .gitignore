@@ -2,3 +2,6 @@ node_modules/
 .env
 run-update.ps1
 update.log
+sync-portal-notes.js
+run-portal-notes.ps1
+portal-notes-done.txt
